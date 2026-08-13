@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "census_id": "skill-hub-v7-live-2026-08-13",
+  "authority": "live-database-census",
+  "source": {
+    "lovable_project_id": "b3490f28-1b02-4a86-ab05-3b39460997cb",
+    "deployed_url": "https://my-agenthub.lovable.app",
+    "database": "Supabase",
+    "skills_table": "public.skills",
+    "categories_table": "public.categories",
+    "observed_at": "2026-08-13"
+  },
+  "counts": {
+    "current_live_registry": 65,
+    "distinct_ids": 65,
+    "distinct_names": 65,
+    "categories": 10,
+    "migration_confirmed_definitions": 65,
+    "runtime_bound_adapters": 10,
+    "live_only_vs_source": 0,
+    "source_missing_from_live": 0,
+    "duplicate_ids": 0,
+    "duplicate_names": 0
+  },
+  "category_counts": [
+    {"id":"core","count":10},
+    {"id":"vision","count":8},
+    {"id":"audio","count":4},
+    {"id":"web","count":7},
+    {"id":"code","count":8},
+    {"id":"ux","count":5},
+    {"id":"strategy","count":5},
+    {"id":"auto","count":4},
+    {"id":"sys","count":6},
+    {"id":"opt","count":8}
+  ],
+  "security": {
+    "skills_rls_enabled": true,
+    "categories_rls_enabled": true,
+    "public_read": true,
+    "writes": "authenticated-admin-only",
+    "skills_write_policy": "has_role(auth.uid(), 'admin'::app_role)",
+    "categories_write_policy": "has_role(auth.uid(), 'admin'::app_role)"
+  },
+  "contract": {
+    "historical_static_claim": 88,
+    "current_authoritative_claim": 65,
+    "historical_claim_status": "stale-static-product-metadata",
+    "correction_lovable_commit": "f944372350d228e1d230ca1b2ebdfc79f3dd1c40"
+  },
+  "status": {
+    "live_db_census": "complete",
+    "source_live_identity_parity": "exact",
+    "native_promotion": 0,
+    "shadow_mode": "blocked-by-native-id-collisions",
+    "hybrid_cutover": "not-started"
+  },
+  "remaining_blockers": [
+    {"code":"native_id_collision","id":"ux-001","v7_name":"UI-Design","native_name":"Screenshot to Blueprint"},
+    {"code":"native_id_collision","id":"ux-002","v7_name":"UX-Research","native_name":"Frontend Fidelity Reconstruction"}
+  ],
+  "notes": [
+    "The previously inferred 23-record delta did not exist in the live database.",
+    "The live public.skills identity set exactly matches the 65 migration-confirmed source definitions.",
+    "The historical 88 count is retained only as source-census evidence and has been corrected in current Skill Hub static product copy."
+  ]
+}
