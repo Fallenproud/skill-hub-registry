@@ -5,7 +5,7 @@
 - deterministic compiler/index
 - provenance and candidate inventories
 - CI validation
-- onboarding/Pages surface
+- onboarding/Pages surface build
 - external OpenClaw inventory import with deterministic normalization
 - external/native isolation tests
 
@@ -17,28 +17,31 @@
 - enumerate 64 initial seed definitions
 - capture later `sys-006` addition → 65 migration-confirmed definitions
 - enumerate 10 explicit runtime adapters
-- preserve public/deployed 88-skill contract claim
-- record unresolved live DB delta: 23
+- preserve historical static 88-skill product claim as evidence
 - preliminary reconciliation against current 17 native packages
 - detect stable-ID collisions before import/promotion
 
-### R1-B — authoritative live DB census ⛔ required
-- export current `public.skills` rows read-only
-- export current categories and category counts
-- identify the 23 unresolved records or correct the 88-skill public contract
-- verify duplicate IDs/names
-- verify current RLS/policy state
-- retain full routing/policy/contracts/tool-definition fields for parity
+### R1-B — authoritative live DB census ✅
+- queried current `public.skills` read-only
+- captured authoritative 65-row identity export
+- captured 10 categories and category counts
+- verified 65 distinct IDs and 65 distinct names
+- verified zero DB-only rows and zero source-confirmed rows missing live
+- resolved the former 23-record inference as stale static metadata, not database rows
+- corrected current Skill Hub static product contract from 88 to 65
+- verified current RLS: public read, authenticated admin-only writes
 
-### R1-C — parity reconciliation ⏳ partial
-- compare live v7 vs migration-confirmed source census
-- compare live v7 vs native Git packages
-- preserve stable IDs where semantically identical
-- resolve ID collisions explicitly
-- classify exact matches, variants, source-only, live-only, native-only, and collisions
+### R1-C — parity reconciliation ⏳ collision resolution next
+- live v7 ↔ migration-confirmed source identity parity is exact 65/65
+- `core-001 / LLM` is an exact native ID/name match
+- `ux-001` collision: v7 `UI-Design` vs native `Screenshot to Blueprint`
+- `ux-002` collision: v7 `UX-Research` vs native `Frontend Fidelity Reconstruction`
+- preserve deployed v7 stable IDs where they are externally established
+- resolve native provisional ID collisions explicitly before shadow mode
 - no automatic native promotion
 
 ### R1-D — shadow mode ⛔ not started
+- start only after `ux-001` and `ux-002` collision policy is applied and validated
 - run DB and file resolvers side-by-side
 - compare routing, contracts, policy, execution binding, and result references
 - record mismatches without changing serving authority
