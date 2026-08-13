@@ -19,6 +19,7 @@
     {"id":"SRC-016","title":"Prior portfolio and skill taxonomy context","verification":"context-verified","linked":["multiple"]},
     {"id":"SRC-017","title":"Post-July 2026 audit/runtime/design/deployment work inventory","verification":"conversation-and-repo-archaeology","linked":["DX-001..DX-028"]},
     {"id":"SRC-018","title":"OpenClaw ecosystem catalog — 65 projects","verification":"preserved-prior-user-supplied-inventory","linked":["inventory/external/openclaw/index/*.json","docs/OPENCLAW_IMPORT.md"]},
-    {"id":"SRC-019","title":"OpenClaw ecosystem catalog schema — 21 fields","verification":"preserved-prior-user-supplied-inventory","linked":["inventory/external/openclaw/schema.json","scripts/import-openclaw.mjs"]}
+    {"id":"SRC-019","title":"OpenClaw ecosystem catalog schema — 21 fields","verification":"preserved-prior-user-supplied-inventory","linked":["inventory/external/openclaw/schema.json","scripts/import-openclaw.mjs"]},
+    {"id":"SRC-020","title":"Skill Hub v7 source census — skill-hub-builder @ aba0a273","verification":"source-pinned-census","linked":["inventory/v7/source-census.json","docs/R1_V7_CENSUS.md"]}
   ]
 }
