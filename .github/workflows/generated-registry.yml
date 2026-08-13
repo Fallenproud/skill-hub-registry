@@ -1,0 +1,42 @@
+name: Refresh generated registry index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'src/registry.mjs'
+      - '.github/workflows/generated-registry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generated-registry-main
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Rebuild deterministic registry index
+        run: npm run build
+      - name: Commit generated index when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- generated/registry.index.json; then
+            echo "generated/registry.index.json already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/registry.index.json
+          git commit -m "chore(registry): refresh generated index"
+          git push
