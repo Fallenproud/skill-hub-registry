@@ -25,7 +25,11 @@ if (command === 'validate') {
     for (const error of inventory.errors) console.error(`- ${error}`);
     process.exit(1);
   }
-  console.log(`Registry valid: ${skills.length} native package(s); ${inventory.history.count} historical candidates; ${inventory.delta.count} post-July candidates; ${inventory.external.openclaw.catalog.count} external OpenClaw projects.`);
+  console.log(
+    `Registry valid: ${skills.length} native package(s); ${inventory.history.count} historical candidates; ` +
+    `${inventory.delta.count} post-July candidates; ${inventory.external.openclaw.catalog.count} external OpenClaw projects; ` +
+    `v7 source census ${inventory.v7.counts.migration_confirmed_definitions}/${inventory.v7.counts.claimed_live_registry} confirmed/claimed with ${inventory.v7.counts.unresolved_live_db_delta} live DB record(s) unresolved.`
+  );
 } else if (command === 'build') {
   const skills = await registryOrExit();
   const index = compileIndex(skills);
