@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "id": "ux-002",
+  "id": "ux-008",
   "slug": "frontend-fidelity-reconstruction",
   "name": "Frontend Fidelity Reconstruction",
   "version": "0.1.0",
@@ -61,7 +61,9 @@
   },
   "provenance": {
     "source_class": "recovered-and-canonicalized",
-    "source_refs": [],
+    "source_refs": [
+      "registry-id-history:ux-002→ux-008"
+    ],
     "project_scope": "domain-neutral"
   },
   "dependencies": {
