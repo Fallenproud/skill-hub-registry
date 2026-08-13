@@ -1,78 +1,1999 @@
 {
   "schema_version": "1.0",
-  "authority": "live-database-export",
-  "observed_at": "2026-08-13",
-  "source": {
-    "lovable_project_id": "b3490f28-1b02-4a86-ab05-3b39460997cb",
-    "deployed_url": "https://my-agenthub.lovable.app",
-    "database": "Supabase",
-    "table": "public.skills"
-  },
+  "source": "skill-hub-live-supabase",
+  "row_count": 65,
   "skills": [
-    {"id":"audio-001","name":"Speech-to-Text","category_id":"audio"},
-    {"id":"audio-002","name":"Text-to-Speech","category_id":"audio"},
-    {"id":"audio-003","name":"Audio-Classification","category_id":"audio"},
-    {"id":"audio-004","name":"Sentiment-Detection","category_id":"audio"},
-    {"id":"auto-001","name":"Workflow-Orchestration","category_id":"auto"},
-    {"id":"auto-002","name":"State-Monitoring","category_id":"auto"},
-    {"id":"auto-003","name":"Self-Correction","category_id":"auto"},
-    {"id":"auto-004","name":"Tool-Selection","category_id":"auto"},
-    {"id":"code-001","name":"Code-Generation","category_id":"code"},
-    {"id":"code-002","name":"Code-Review","category_id":"code"},
-    {"id":"code-003","name":"Code-Refactoring","category_id":"code"},
-    {"id":"code-004","name":"Testing","category_id":"code"},
-    {"id":"code-005","name":"Debugging","category_id":"code"},
-    {"id":"code-006","name":"Documentation","category_id":"code"},
-    {"id":"code-007","name":"DevOps","category_id":"code"},
-    {"id":"code-008","name":"Security-Scanning","category_id":"code"},
-    {"id":"core-001","name":"LLM","category_id":"core"},
-    {"id":"core-002","name":"Reasoning-Engine","category_id":"core"},
-    {"id":"core-003","name":"Planning","category_id":"core"},
-    {"id":"core-004","name":"Task-Decomposition","category_id":"core"},
-    {"id":"core-005","name":"Chain-of-Thought-Control","category_id":"core"},
-    {"id":"core-006","name":"Memory-Short-Term","category_id":"core"},
-    {"id":"core-007","name":"Memory-Long-Term","category_id":"core"},
-    {"id":"core-008","name":"Vector-Retrieval","category_id":"core"},
-    {"id":"core-009","name":"RAG-Orchestration","category_id":"core"},
-    {"id":"core-010","name":"Multi-Agent-Coordinator","category_id":"core"},
-    {"id":"opt-001","name":"Translation","category_id":"opt"},
-    {"id":"opt-002","name":"Summarization","category_id":"opt"},
-    {"id":"opt-003","name":"Classification","category_id":"opt"},
-    {"id":"opt-004","name":"Entity-Extraction","category_id":"opt"},
-    {"id":"opt-005","name":"Email-Drafting","category_id":"opt"},
-    {"id":"opt-006","name":"Meeting-Notes","category_id":"opt"},
-    {"id":"opt-007","name":"Presentation-Builder","category_id":"opt"},
-    {"id":"opt-008","name":"Math-Solver","category_id":"opt"},
-    {"id":"strategy-001","name":"Competitive-Analysis","category_id":"strategy"},
-    {"id":"strategy-002","name":"Risk-Assessment","category_id":"strategy"},
-    {"id":"strategy-003","name":"Decision-Framework","category_id":"strategy"},
-    {"id":"strategy-004","name":"Compliance-Check","category_id":"strategy"},
-    {"id":"strategy-005","name":"Business-Writing","category_id":"strategy"},
-    {"id":"sys-001","name":"Token-Management","category_id":"sys"},
-    {"id":"sys-002","name":"Error-Recovery","category_id":"sys"},
-    {"id":"sys-003","name":"Context-Window-Management","category_id":"sys"},
-    {"id":"sys-004","name":"Logging","category_id":"sys"},
-    {"id":"sys-005","name":"Cache-Management","category_id":"sys"},
-    {"id":"sys-006","name":"Skill-Registry-Manifest","category_id":"sys"},
-    {"id":"ux-001","name":"UI-Design","category_id":"ux"},
-    {"id":"ux-002","name":"UX-Research","category_id":"ux"},
-    {"id":"ux-003","name":"Copywriting","category_id":"ux"},
-    {"id":"ux-004","name":"Accessibility-Audit","category_id":"ux"},
-    {"id":"ux-005","name":"Design-System","category_id":"ux"},
-    {"id":"vision-001","name":"VLM","category_id":"vision"},
-    {"id":"vision-002","name":"Image-Generation","category_id":"vision"},
-    {"id":"vision-003","name":"Image-Editing","category_id":"vision"},
-    {"id":"vision-004","name":"Image-Upscaling","category_id":"vision"},
-    {"id":"vision-005","name":"Image-Classification","category_id":"vision"},
-    {"id":"vision-006","name":"Object-Detection","category_id":"vision"},
-    {"id":"vision-007","name":"OCR","category_id":"vision"},
-    {"id":"vision-008","name":"Video-Analysis","category_id":"vision"},
-    {"id":"web-001","name":"Web-Search","category_id":"web"},
-    {"id":"web-002","name":"Web-Scraping","category_id":"web"},
-    {"id":"web-003","name":"Data-Analysis","category_id":"web"},
-    {"id":"web-004","name":"Data-Transformation","category_id":"web"},
-    {"id":"web-005","name":"API-Integration","category_id":"web"},
-    {"id":"web-006","name":"PDF-Processing","category_id":"web"},
-    {"id":"web-007","name":"Spreadsheet-Processing","category_id":"web"}
+    {
+      "id": "audio-001",
+      "name": "Speech-to-Text",
+      "category_id": "audio",
+      "description": "Transcribes spoken audio into text with timestamps and speaker labels.",
+      "trigger_condition": "Audio file or recording needs transcription.",
+      "boundary": "Not for music or non-speech audio.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "audio file",
+        "language"
+      ],
+      "outputs": [
+        "transcript",
+        "timestamps"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "audio-002",
+      "name": "Text-to-Speech",
+      "category_id": "audio",
+      "description": "Converts text into natural-sounding speech with voice selection.",
+      "trigger_condition": "User requests audio output from text.",
+      "boundary": "Not for real-time conversation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "text",
+        "voice preference"
+      ],
+      "outputs": [
+        "audio file"
+      ],
+      "fallback_chain": [],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "audio-003",
+      "name": "Audio-Classification",
+      "category_id": "audio",
+      "description": "Classifies audio segments into categories like speech, music, noise.",
+      "trigger_condition": "Audio content type detection needed.",
+      "boundary": "Not for speech content understanding.",
+      "priority": 3,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "audio file"
+      ],
+      "outputs": [
+        "classifications"
+      ],
+      "fallback_chain": [
+        "Speech-to-Text"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "audio-004",
+      "name": "Sentiment-Detection",
+      "category_id": "audio",
+      "description": "Detects emotional tone and sentiment from speech audio.",
+      "trigger_condition": "Emotional analysis of spoken content needed.",
+      "boundary": "Not highly accurate for sarcasm.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "audio/text"
+      ],
+      "outputs": [
+        "sentiment scores"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "auto-001",
+      "name": "Workflow-Orchestration",
+      "category_id": "auto",
+      "description": "Manages multi-step automated workflows with branching, error handling, and retries.",
+      "trigger_condition": "Complex automated workflow needed.",
+      "boundary": "Not for simple sequential tasks.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "workflow definition",
+        "triggers"
+      ],
+      "outputs": [
+        "execution result",
+        "logs"
+      ],
+      "fallback_chain": [
+        "Task-Decomposition"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "auto-002",
+      "name": "State-Monitoring",
+      "category_id": "auto",
+      "description": "Monitors system state, detects anomalies, and triggers alerts.",
+      "trigger_condition": "Continuous monitoring or anomaly detection needed.",
+      "boundary": "Not for historical analysis.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "metrics",
+        "thresholds"
+      ],
+      "outputs": [
+        "alerts",
+        "status"
+      ],
+      "fallback_chain": [
+        "Data-Analysis"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "auto-003",
+      "name": "Self-Correction",
+      "category_id": "auto",
+      "description": "Detects and corrects errors in agent output through validation loops.",
+      "trigger_condition": "Output quality assurance needed.",
+      "boundary": "Limited to detectable errors.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "output",
+        "validation rules"
+      ],
+      "outputs": [
+        "corrected output"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "auto-004",
+      "name": "Tool-Selection",
+      "category_id": "auto",
+      "description": "Dynamically selects the best tool or API for a given subtask.",
+      "trigger_condition": "Multiple tools could serve the same subtask.",
+      "boundary": "Selection based on available tools only.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "task",
+        "available tools"
+      ],
+      "outputs": [
+        "selected tool",
+        "rationale"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-001",
+      "name": "Code-Generation",
+      "category_id": "code",
+      "description": "Generates code in any language from natural language specifications.",
+      "trigger_condition": "User requests code creation or implementation.",
+      "boundary": "Always review generated code before execution.",
+      "priority": 1,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "specification",
+        "language",
+        "framework"
+      ],
+      "outputs": [
+        "source code",
+        "documentation"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-002",
+      "name": "Code-Review",
+      "category_id": "code",
+      "description": "Reviews code for bugs, security issues, performance, and best practices.",
+      "trigger_condition": "User submits code for review or quality check.",
+      "boundary": "Not a replacement for security audits.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source code",
+        "review criteria"
+      ],
+      "outputs": [
+        "findings",
+        "suggestions"
+      ],
+      "fallback_chain": [
+        "Code-Generation"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-003",
+      "name": "Code-Refactoring",
+      "category_id": "code",
+      "description": "Improves code structure, readability, and maintainability without changing behavior.",
+      "trigger_condition": "Code needs cleanup or modernization.",
+      "boundary": "Must preserve existing behavior.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source code",
+        "refactor goals"
+      ],
+      "outputs": [
+        "refactored code",
+        "diff"
+      ],
+      "fallback_chain": [
+        "Code-Review"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-004",
+      "name": "Testing",
+      "category_id": "code",
+      "description": "Generates unit, integration, and e2e tests for code.",
+      "trigger_condition": "User needs test coverage for their code.",
+      "boundary": "Tests should be deterministic and isolated.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source code",
+        "test framework"
+      ],
+      "outputs": [
+        "test files",
+        "coverage report"
+      ],
+      "fallback_chain": [
+        "Code-Review"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-005",
+      "name": "Debugging",
+      "category_id": "code",
+      "description": "Identifies and fixes bugs using error analysis and trace inspection.",
+      "trigger_condition": "User reports a bug or error in their code.",
+      "boundary": "May need runtime access for complex bugs.",
+      "priority": 1,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "error details",
+        "source code",
+        "logs"
+      ],
+      "outputs": [
+        "root cause",
+        "fix"
+      ],
+      "fallback_chain": [
+        "Code-Review"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-006",
+      "name": "Documentation",
+      "category_id": "code",
+      "description": "Generates technical documentation, API docs, and READMEs.",
+      "trigger_condition": "User needs documentation for their code or project.",
+      "boundary": "Not for end-user tutorials.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source code",
+        "doc format"
+      ],
+      "outputs": [
+        "documentation"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-007",
+      "name": "DevOps",
+      "category_id": "code",
+      "description": "Manages CI/CD pipelines, infrastructure, and deployment configurations.",
+      "trigger_condition": "Deployment, infrastructure, or pipeline configuration needed.",
+      "boundary": "Not for application code changes.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "infrastructure spec",
+        "platform"
+      ],
+      "outputs": [
+        "config files",
+        "scripts"
+      ],
+      "fallback_chain": [
+        "Code-Generation"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "code-008",
+      "name": "Security-Scanning",
+      "category_id": "code",
+      "description": "Scans code for security vulnerabilities and compliance issues.",
+      "trigger_condition": "Security assessment of code needed.",
+      "boundary": "Not a replacement for penetration testing.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source code",
+        "security policy"
+      ],
+      "outputs": [
+        "vulnerabilities",
+        "remediations"
+      ],
+      "fallback_chain": [
+        "Code-Review"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "core-001",
+      "name": "LLM",
+      "category_id": "core",
+      "description": "General text reasoning, generation, summarization, rewriting, and structured response synthesis.",
+      "trigger_condition": "Default for text-first tasks where no specialized modality is required.",
+      "boundary": "Do not use when a specialized modality is clearly required.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "natural language",
+        "instructions",
+        "optional context"
+      ],
+      "outputs": [
+        "text",
+        "markdown",
+        "JSON"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine",
+        "Task-Decomposition"
+      ],
+      "invoke_conditions": [
+        "text input present",
+        "no media or specialized tool required"
+      ],
+      "block_conditions": [
+        "media generation requested",
+        "code execution required"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-002",
+      "name": "Reasoning-Engine",
+      "category_id": "core",
+      "description": "Performs multi-step logical analysis, constraint solving, and higher-difficulty decision support.",
+      "trigger_condition": "Complex planning or nontrivial logic chains requiring decomposition.",
+      "boundary": "Avoid for simple drafting or single-step generation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": true,
+      "inputs": [
+        "problem statement",
+        "constraints",
+        "objectives"
+      ],
+      "outputs": [
+        "structured reasoning path",
+        "ranked conclusions"
+      ],
+      "fallback_chain": [
+        "Task-Decomposition",
+        "LLM"
+      ],
+      "invoke_conditions": [
+        "multi-step logic required",
+        "constraint satisfaction needed"
+      ],
+      "block_conditions": [
+        "simple one-step task"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-003",
+      "name": "Planning",
+      "category_id": "core",
+      "description": "Converts goals into ordered steps, milestones, dependencies, and execution phases.",
+      "trigger_condition": "User asks for roadmap, implementation sequence, or rollout strategy.",
+      "boundary": "Do not use as the final executor — plan only.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "goal",
+        "scope",
+        "deadlines",
+        "constraints"
+      ],
+      "outputs": [
+        "step plan",
+        "phases",
+        "timeline"
+      ],
+      "fallback_chain": [
+        "Task-Decomposition",
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [
+        "roadmap requested",
+        "timeline needed"
+      ],
+      "block_conditions": [
+        "execution expected immediately"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-004",
+      "name": "Task-Decomposition",
+      "category_id": "core",
+      "description": "Breaks large work into atomic subtasks with clear ownership and interfaces.",
+      "trigger_condition": "Multi-part work or large ambiguous requests needing structured breakdown.",
+      "boundary": "Not for final content generation alone.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "complex task",
+        "target outcome"
+      ],
+      "outputs": [
+        "subtasks",
+        "dependency graph"
+      ],
+      "fallback_chain": [
+        "Planning",
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [
+        "complex multi-part request"
+      ],
+      "block_conditions": [
+        "single clear deliverable"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-005",
+      "name": "Chain-of-Thought-Control",
+      "category_id": "core",
+      "description": "Enforces concise, bounded, non-leaky internal reasoning behavior and output discipline.",
+      "trigger_condition": "Sensitive, high-stakes, or token-limited tasks requiring disciplined trace management.",
+      "boundary": "Must not expose private reasoning traces externally.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": true,
+      "inputs": [
+        "task complexity",
+        "response policy",
+        "privacy constraints"
+      ],
+      "outputs": [
+        "controlled reasoning mode"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [
+        "sensitive task context",
+        "token budget constraint"
+      ],
+      "block_conditions": [
+        "no reasoning constraint required"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-006",
+      "name": "Memory-Short-Term",
+      "category_id": "core",
+      "description": "Tracks immediate conversational state, active variables, and turn-local decisions.",
+      "trigger_condition": "Ongoing multi-step interaction requiring state carry-forward.",
+      "boundary": "Do not treat as durable memory — session-scoped only.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "current thread context"
+      ],
+      "outputs": [
+        "active session state"
+      ],
+      "fallback_chain": [
+        "State-Monitoring"
+      ],
+      "invoke_conditions": [
+        "multi-turn conversation"
+      ],
+      "block_conditions": [
+        "single-turn task"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-007",
+      "name": "Memory-Long-Term",
+      "category_id": "core",
+      "description": "Stores stable user, project, or system preferences for future reuse across sessions.",
+      "trigger_condition": "Repeat workflows or user-specific continuity needing persistence.",
+      "boundary": "Avoid storing trivial or sensitive data without explicit need.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": true,
+      "inputs": [
+        "durable facts",
+        "preferences",
+        "context"
+      ],
+      "outputs": [
+        "long-horizon context"
+      ],
+      "fallback_chain": [
+        "Vector-Retrieval"
+      ],
+      "invoke_conditions": [
+        "cross-session recall needed"
+      ],
+      "block_conditions": [
+        "one-off task"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-008",
+      "name": "Vector-Retrieval",
+      "category_id": "core",
+      "description": "Retrieves semantically similar chunks from indexed knowledge bases using embedding similarity.",
+      "trigger_condition": "Contextual recall from documents or memory stores is required.",
+      "boundary": "Not for direct generation — retrieval and ranking only.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "query embedding",
+        "semantic prompt"
+      ],
+      "outputs": [
+        "ranked passages"
+      ],
+      "fallback_chain": [
+        "Web-Search",
+        "RAG-Orchestration"
+      ],
+      "invoke_conditions": [
+        "knowledge base exists"
+      ],
+      "block_conditions": [
+        "no vector store connected"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-009",
+      "name": "RAG-Orchestration",
+      "category_id": "core",
+      "description": "Combines retrieval, grounding, and answer synthesis into a citation-aware output flow.",
+      "trigger_condition": "Knowledge-backed answers requiring accuracy and source attribution.",
+      "boundary": "Avoid when no source base exists.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": true,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": true,
+      "inputs": [
+        "question",
+        "indexed sources",
+        "retrieval policy"
+      ],
+      "outputs": [
+        "grounded answer",
+        "source mapping"
+      ],
+      "fallback_chain": [
+        "Vector-Retrieval",
+        "Web-Search"
+      ],
+      "invoke_conditions": [
+        "factual grounding required"
+      ],
+      "block_conditions": [
+        "no indexed sources available"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "core-010",
+      "name": "Multi-Agent-Coordinator",
+      "category_id": "core",
+      "description": "Assigns roles, routes subtasks, merges outputs, and resolves conflicts across agents.",
+      "trigger_condition": "Parallel or role-based multi-agent systems needing orchestration.",
+      "boundary": "Avoid for single-skill tasks — overhead not justified.",
+      "priority": 3,
+      "cost_class": "high",
+      "latency_class": "slow",
+      "requires_auth": true,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": true,
+      "inputs": [
+        "task graph",
+        "available agents",
+        "policies"
+      ],
+      "outputs": [
+        "execution plan",
+        "merged result"
+      ],
+      "fallback_chain": [
+        "Workflow-Orchestration"
+      ],
+      "invoke_conditions": [
+        "multiple agents available"
+      ],
+      "block_conditions": [
+        "single agent system"
+      ],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-001",
+      "name": "Translation",
+      "category_id": "opt",
+      "description": "Translates text between languages with context awareness.",
+      "trigger_condition": "Multi-language translation needed.",
+      "boundary": "Not for specialized legal or medical translation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "text",
+        "source language",
+        "target language"
+      ],
+      "outputs": [
+        "translated text"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-002",
+      "name": "Summarization",
+      "category_id": "opt",
+      "description": "Creates concise summaries of long documents or conversations.",
+      "trigger_condition": "Content needs condensing while preserving key points.",
+      "boundary": "May miss nuance in highly technical content.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "content",
+        "summary length"
+      ],
+      "outputs": [
+        "summary"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-003",
+      "name": "Classification",
+      "category_id": "opt",
+      "description": "Classifies text into predefined or discovered categories.",
+      "trigger_condition": "Content categorization needed.",
+      "boundary": "Accuracy depends on category clarity.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "text",
+        "categories"
+      ],
+      "outputs": [
+        "classification",
+        "confidence"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-004",
+      "name": "Entity-Extraction",
+      "category_id": "opt",
+      "description": "Extracts named entities (people, places, orgs, dates) from text.",
+      "trigger_condition": "Structured data extraction from unstructured text needed.",
+      "boundary": "Not for relationship extraction.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "text",
+        "entity types"
+      ],
+      "outputs": [
+        "entities"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-005",
+      "name": "Email-Drafting",
+      "category_id": "opt",
+      "description": "Drafts professional emails with appropriate tone and structure.",
+      "trigger_condition": "Email composition assistance needed.",
+      "boundary": "User should review before sending.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "context",
+        "tone",
+        "recipients"
+      ],
+      "outputs": [
+        "email draft"
+      ],
+      "fallback_chain": [
+        "LLM",
+        "Copywriting"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-006",
+      "name": "Meeting-Notes",
+      "category_id": "opt",
+      "description": "Generates structured meeting notes with action items and decisions.",
+      "trigger_condition": "Meeting transcript or notes need processing.",
+      "boundary": "Not for real-time transcription.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "transcript/notes"
+      ],
+      "outputs": [
+        "structured notes",
+        "action items"
+      ],
+      "fallback_chain": [
+        "Summarization"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-007",
+      "name": "Presentation-Builder",
+      "category_id": "opt",
+      "description": "Creates slide deck outlines and content from topics or data.",
+      "trigger_condition": "Presentation creation needed.",
+      "boundary": "Not for visual slide design.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "topic",
+        "audience",
+        "key points"
+      ],
+      "outputs": [
+        "slide outline",
+        "speaker notes"
+      ],
+      "fallback_chain": [
+        "Business-Writing"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "opt-008",
+      "name": "Math-Solver",
+      "category_id": "opt",
+      "description": "Solves mathematical problems with step-by-step explanations.",
+      "trigger_condition": "Mathematical computation or proof needed.",
+      "boundary": "Not for approximate or statistical problems.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "math problem"
+      ],
+      "outputs": [
+        "solution",
+        "steps"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "strategy-001",
+      "name": "Competitive-Analysis",
+      "category_id": "strategy",
+      "description": "Analyzes competitors, market positioning, and strategic opportunities.",
+      "trigger_condition": "Market or competitive analysis needed.",
+      "boundary": "Based on available public information only.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "industry",
+        "competitors"
+      ],
+      "outputs": [
+        "analysis report",
+        "recommendations"
+      ],
+      "fallback_chain": [
+        "Web-Search",
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "strategy-002",
+      "name": "Risk-Assessment",
+      "category_id": "strategy",
+      "description": "Identifies, evaluates, and prioritizes risks with mitigation strategies.",
+      "trigger_condition": "Risk evaluation for a project or decision needed.",
+      "boundary": "Not a legal or financial advisory.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "project context",
+        "risk factors"
+      ],
+      "outputs": [
+        "risk matrix",
+        "mitigations"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "strategy-003",
+      "name": "Decision-Framework",
+      "category_id": "strategy",
+      "description": "Structures complex decisions using frameworks like SWOT, decision trees, and weighted scoring.",
+      "trigger_condition": "Complex decision requiring structured analysis.",
+      "boundary": "Framework-based — final judgment remains with user.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "decision context",
+        "criteria"
+      ],
+      "outputs": [
+        "decision framework",
+        "recommendation"
+      ],
+      "fallback_chain": [
+        "Reasoning-Engine"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "strategy-004",
+      "name": "Compliance-Check",
+      "category_id": "strategy",
+      "description": "Reviews content or processes against regulatory and policy requirements.",
+      "trigger_condition": "Compliance verification needed.",
+      "boundary": "Not legal advice.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "content",
+        "regulations"
+      ],
+      "outputs": [
+        "compliance report"
+      ],
+      "fallback_chain": [
+        "Risk-Assessment"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "strategy-005",
+      "name": "Business-Writing",
+      "category_id": "strategy",
+      "description": "Writes business documents: proposals, reports, memos, and presentations.",
+      "trigger_condition": "Professional business document needed.",
+      "boundary": "Not for creative writing.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "context",
+        "document type",
+        "audience"
+      ],
+      "outputs": [
+        "business document"
+      ],
+      "fallback_chain": [
+        "LLM",
+        "Copywriting"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-001",
+      "name": "Token-Management",
+      "category_id": "sys",
+      "description": "Tracks and optimizes token usage across model calls.",
+      "trigger_condition": "Token budget management needed.",
+      "boundary": "Cannot reduce inherent task complexity.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "token budget",
+        "usage history"
+      ],
+      "outputs": [
+        "usage report",
+        "optimization plan"
+      ],
+      "fallback_chain": [],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-002",
+      "name": "Error-Recovery",
+      "category_id": "sys",
+      "description": "Handles errors, retries failed operations, and provides fallback paths.",
+      "trigger_condition": "Operation failure needing graceful recovery.",
+      "boundary": "Cannot fix fundamental system issues.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "error context",
+        "retry policy"
+      ],
+      "outputs": [
+        "recovery result"
+      ],
+      "fallback_chain": [
+        "Self-Correction"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-003",
+      "name": "Context-Window-Management",
+      "category_id": "sys",
+      "description": "Manages context window size through summarization and prioritization.",
+      "trigger_condition": "Context exceeds available window.",
+      "boundary": "May lose nuance through summarization.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "context items",
+        "priority rules"
+      ],
+      "outputs": [
+        "optimized context"
+      ],
+      "fallback_chain": [
+        "Token-Management"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-004",
+      "name": "Logging",
+      "category_id": "sys",
+      "description": "Records system events, decisions, and outputs for debugging and audit.",
+      "trigger_condition": "Audit trail or debugging information needed.",
+      "boundary": "Not for user-facing output.",
+      "priority": 3,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "events",
+        "log level"
+      ],
+      "outputs": [
+        "log entries"
+      ],
+      "fallback_chain": [],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-005",
+      "name": "Cache-Management",
+      "category_id": "sys",
+      "description": "Caches and retrieves frequently used results to reduce latency and cost.",
+      "trigger_condition": "Repeated queries or computations detected.",
+      "boundary": "Cache may become stale.",
+      "priority": 3,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": true,
+      "logs_required": false,
+      "inputs": [
+        "cache key",
+        "TTL"
+      ],
+      "outputs": [
+        "cached result"
+      ],
+      "fallback_chain": [],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "sys-006",
+      "name": "Skill-Registry-Manifest",
+      "category_id": "sys",
+      "description": "Returns the complete categorized catalog of available SkillHub skills as a structured manifest for external agents (e.g. Sophie).",
+      "trigger_condition": "When an external agent asks \"what skills are available?\" or requests a capability index/manifest/catalog.",
+      "boundary": "Read-only — returns only registry metadata, never invokes downstream skills.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [],
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array"
+          }
+        }
+      },
+      "fallback_chain": [],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "ux-001",
+      "name": "UI-Design",
+      "category_id": "ux",
+      "description": "Creates UI component designs, layouts, and visual hierarchies.",
+      "trigger_condition": "User needs UI design for a feature or page.",
+      "boundary": "Not for backend logic.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "requirements",
+        "brand guidelines"
+      ],
+      "outputs": [
+        "UI designs",
+        "component specs"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "ux-002",
+      "name": "UX-Research",
+      "category_id": "ux",
+      "description": "Analyzes user behavior, conducts heuristic evaluations, and identifies usability issues.",
+      "trigger_condition": "User experience assessment or improvement needed.",
+      "boundary": "Not for visual design implementation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "product context",
+        "user feedback"
+      ],
+      "outputs": [
+        "UX findings",
+        "recommendations"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "ux-003",
+      "name": "Copywriting",
+      "category_id": "ux",
+      "description": "Writes UI copy, microcopy, error messages, and marketing text.",
+      "trigger_condition": "Text content needed for interfaces or marketing.",
+      "boundary": "Not for long-form content writing.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "context",
+        "tone",
+        "constraints"
+      ],
+      "outputs": [
+        "copy variants"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "ux-004",
+      "name": "Accessibility-Audit",
+      "category_id": "ux",
+      "description": "Evaluates interfaces for WCAG compliance and accessibility issues.",
+      "trigger_condition": "Accessibility review needed.",
+      "boundary": "Not a legal compliance certification.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "UI code/screenshots"
+      ],
+      "outputs": [
+        "accessibility report"
+      ],
+      "fallback_chain": [
+        "UX-Research"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "ux-005",
+      "name": "Design-System",
+      "category_id": "ux",
+      "description": "Creates and maintains design tokens, component libraries, and style guides.",
+      "trigger_condition": "Design system creation or update needed.",
+      "boundary": "Not for individual UI implementations.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "brand guidelines",
+        "platform"
+      ],
+      "outputs": [
+        "design tokens",
+        "component library"
+      ],
+      "fallback_chain": [
+        "UI-Design"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-001",
+      "name": "VLM",
+      "category_id": "vision",
+      "description": "Understands images/screenshots and answers questions about visual content.",
+      "trigger_condition": "User asks to inspect, analyze, or interpret an image.",
+      "boundary": "Do not use for image creation or generation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "image",
+        "prompt",
+        "region hints"
+      ],
+      "outputs": [
+        "caption",
+        "analysis",
+        "meaning"
+      ],
+      "fallback_chain": [
+        "OCR",
+        "Image-Classification"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-002",
+      "name": "Image-Generation",
+      "category_id": "vision",
+      "description": "Creates new images from prompts, references, or art direction.",
+      "trigger_condition": "User requests visual creation from scratch.",
+      "boundary": "Avoid when analysis of an existing image is needed.",
+      "priority": 2,
+      "cost_class": "high",
+      "latency_class": "slow",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "prompt",
+        "style",
+        "ratio"
+      ],
+      "outputs": [
+        "image asset(s)",
+        "metadata"
+      ],
+      "fallback_chain": [
+        "Image-Editing"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-003",
+      "name": "Image-Editing",
+      "category_id": "vision",
+      "description": "Modifies an existing image by adding, removing, or restyling elements.",
+      "trigger_condition": "User requests changes to an uploaded image.",
+      "boundary": "Do not use when a brand-new image is better suited.",
+      "priority": 2,
+      "cost_class": "high",
+      "latency_class": "slow",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source image",
+        "edit instructions",
+        "masks"
+      ],
+      "outputs": [
+        "edited image"
+      ],
+      "fallback_chain": [
+        "Image-Generation"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-004",
+      "name": "Image-Upscaling",
+      "category_id": "vision",
+      "description": "Enhances image resolution and perceived detail.",
+      "trigger_condition": "Existing image is too small or blurry for intended use.",
+      "boundary": "Do not promise true lost-detail recovery.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "low-res image",
+        "target size"
+      ],
+      "outputs": [
+        "upscaled image"
+      ],
+      "fallback_chain": [
+        "Image-Editing"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-005",
+      "name": "Image-Classification",
+      "category_id": "vision",
+      "description": "Labels or categorizes an image into known classes.",
+      "trigger_condition": "Fast category or content-type detection needed.",
+      "boundary": "Not for pixel-level localization.",
+      "priority": 3,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "image",
+        "class schema"
+      ],
+      "outputs": [
+        "labels",
+        "confidence scores"
+      ],
+      "fallback_chain": [
+        "Object-Detection",
+        "VLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-006",
+      "name": "Object-Detection",
+      "category_id": "vision",
+      "description": "Finds and locates objects within an image with bounding boxes.",
+      "trigger_condition": "Spatial detection or counting of objects needed.",
+      "boundary": "Not for abstract visual QA.",
+      "priority": 3,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "image",
+        "detection targets"
+      ],
+      "outputs": [
+        "bounding boxes",
+        "labels"
+      ],
+      "fallback_chain": [
+        "VLM",
+        "Image-Classification"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-007",
+      "name": "OCR",
+      "category_id": "vision",
+      "description": "Extracts text from images, screenshots, and scanned documents.",
+      "trigger_condition": "Text extraction from visual media.",
+      "boundary": "Not for handwriting recognition in difficult cases.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "image",
+        "language hints"
+      ],
+      "outputs": [
+        "extracted text",
+        "confidence"
+      ],
+      "fallback_chain": [
+        "VLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "vision-008",
+      "name": "Video-Analysis",
+      "category_id": "vision",
+      "description": "Analyzes video content for scene detection, object tracking, and event recognition.",
+      "trigger_condition": "User submits video for analysis.",
+      "boundary": "Not for real-time streaming analysis.",
+      "priority": 3,
+      "cost_class": "high",
+      "latency_class": "slow",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "video",
+        "analysis targets"
+      ],
+      "outputs": [
+        "scene analysis",
+        "events"
+      ],
+      "fallback_chain": [
+        "VLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-001",
+      "name": "Web-Search",
+      "category_id": "web",
+      "description": "Searches the web for real-time information and returns relevant results.",
+      "trigger_condition": "User needs current or factual information not in training data.",
+      "boundary": "Not for generating content — retrieval only.",
+      "priority": 1,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": true,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "search query"
+      ],
+      "outputs": [
+        "search results",
+        "snippets"
+      ],
+      "fallback_chain": [
+        "RAG-Orchestration"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-002",
+      "name": "Web-Scraping",
+      "category_id": "web",
+      "description": "Extracts structured data from web pages and APIs.",
+      "trigger_condition": "User needs data from a specific URL or website.",
+      "boundary": "Respect robots.txt and rate limits.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": true,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "URL",
+        "extraction rules"
+      ],
+      "outputs": [
+        "structured data"
+      ],
+      "fallback_chain": [
+        "Web-Search"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-003",
+      "name": "Data-Analysis",
+      "category_id": "web",
+      "description": "Analyzes datasets with statistical methods, pattern detection, and visualization.",
+      "trigger_condition": "User provides data for analysis or asks analytical questions.",
+      "boundary": "Not for data collection.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": false,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "dataset",
+        "analysis goals"
+      ],
+      "outputs": [
+        "insights",
+        "charts",
+        "statistics"
+      ],
+      "fallback_chain": [
+        "LLM"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-004",
+      "name": "Data-Transformation",
+      "category_id": "web",
+      "description": "Converts, cleans, and reshapes data between formats.",
+      "trigger_condition": "Data needs reformatting or cleaning.",
+      "boundary": "Not for analysis or interpretation.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "source data",
+        "target format"
+      ],
+      "outputs": [
+        "transformed data"
+      ],
+      "fallback_chain": [
+        "Data-Analysis"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-005",
+      "name": "API-Integration",
+      "category_id": "web",
+      "description": "Calls external APIs with proper authentication and error handling.",
+      "trigger_condition": "Integration with third-party service needed.",
+      "boundary": "Requires valid API credentials.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "API spec",
+        "credentials",
+        "request"
+      ],
+      "outputs": [
+        "API response"
+      ],
+      "fallback_chain": [
+        "Web-Scraping"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-006",
+      "name": "PDF-Processing",
+      "category_id": "web",
+      "description": "Extracts text, tables, and metadata from PDF documents.",
+      "trigger_condition": "PDF document needs parsing.",
+      "boundary": "Not for PDF generation.",
+      "priority": 2,
+      "cost_class": "medium",
+      "latency_class": "normal",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "PDF file"
+      ],
+      "outputs": [
+        "extracted content",
+        "tables"
+      ],
+      "fallback_chain": [
+        "OCR"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    },
+    {
+      "id": "web-007",
+      "name": "Spreadsheet-Processing",
+      "category_id": "web",
+      "description": "Reads, writes, and manipulates spreadsheet data.",
+      "trigger_condition": "Spreadsheet operations needed.",
+      "boundary": "Not for complex data analysis.",
+      "priority": 2,
+      "cost_class": "low",
+      "latency_class": "fast",
+      "requires_auth": false,
+      "requires_freshness": false,
+      "safe_for_parallel": true,
+      "stateful": false,
+      "logs_required": false,
+      "inputs": [
+        "spreadsheet file",
+        "operations"
+      ],
+      "outputs": [
+        "processed data"
+      ],
+      "fallback_chain": [
+        "Data-Transformation"
+      ],
+      "invoke_conditions": [],
+      "block_conditions": [],
+      "tool_definition": null
+    }
   ]
 }
