@@ -40,11 +40,15 @@ test('adapter skills require explicit binding', () => {
   assert.ok(validateManifest(x).some((error) => error.includes('requires binding')));
 });
 
-test('archaeology inventory preserves internal candidates and external OpenClaw index', async () => {
+test('archaeology inventory preserves internal candidates, live v7 census, and external OpenClaw index', async () => {
   const result = await validateInventory(root);
   assert.equal(result.errors.length, 0, result.errors.join('\n'));
   assert.equal(result.history.count, 35);
   assert.equal(result.delta.count, 28);
+  assert.equal(result.v7_live.census.counts.current_live_registry, 65);
+  assert.equal(result.v7_live.export.length, 65);
+  assert.equal(result.v7_live.census.counts.live_only_vs_source, 0);
+  assert.equal(result.v7_live.census.counts.source_missing_from_live, 0);
   assert.equal(result.external.openclaw.index.count, 65);
   assert.equal(result.external.openclaw.summary.native_promotion_count, 0);
 });
