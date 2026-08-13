@@ -13,9 +13,15 @@ if (!input) {
 }
 
 const census = JSON.parse(await fs.readFile(path.join(root, 'inventory', 'v7', 'source-census.json'), 'utf8'));
+const liveCensus = JSON.parse(await fs.readFile(path.join(root, 'inventory', 'v7', 'live-census.json'), 'utf8'));
 const nativeIndex = JSON.parse(await fs.readFile(path.join(root, 'generated', 'registry.index.json'), 'utf8'));
 const liveValue = JSON.parse(await fs.readFile(path.resolve(process.cwd(), input), 'utf8'));
-const result = reconcileV7({ census, nativeIndex, liveRows: liveValue });
+const result = reconcileV7({
+  census,
+  nativeIndex,
+  liveRows: liveValue,
+  liveContractCount: liveCensus.counts.current_live_registry
+});
 
 process.stdout.write(JSON.stringify(result, null, 2) + '\n');
 if (!result.safe_to_shadow) process.exitCode = 1;
