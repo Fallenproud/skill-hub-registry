@@ -1,6 +1,6 @@
 {
   "name": "skill-hub-registry",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Git-backed, versioned skill packages and Foundry contracts for Skill Hub and compatible agent runtimes.",
@@ -11,8 +11,10 @@
     "validate": "node src/cli.mjs validate",
     "build": "node src/cli.mjs build",
     "site:build": "npm run build && node scripts/build-site.mjs",
-    "check": "npm run import:openclaw && npm run validate && npm run build && npm test && git diff --exit-code -- generated/registry.index.json inventory/external/openclaw/index inventory/external/openclaw/schema.json inventory/external/openclaw/summary.json",
+    "check": "npm run import:openclaw && npm run validate && npm run build && npm run census:v7 && npm test && git diff --exit-code -- generated/registry.index.json inventory/external/openclaw/index inventory/external/openclaw/schema.json inventory/external/openclaw/summary.json",
     "test": "node --test tests/*.test.mjs",
+    "census:v7": "node scripts/census-v7.mjs",
+    "reconcile:v7": "node scripts/reconcile-v7.mjs",
     "import:v7": "node scripts/import-v7.mjs",
     "import:openclaw": "node scripts/import-openclaw.mjs"
   }
