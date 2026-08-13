@@ -1,0 +1,60 @@
+name: R1 sync authoritative v7 live export
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-v7-live-export.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Fetch full live export donor snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error \
+            'https://raw.githubusercontent.com/Fallenproud/skill-hub-builder/main/migration/v7-live-export.full.json' \
+            -o /tmp/v7-live-export.full.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          src = Path('/tmp/v7-live-export.full.json')
+          payload = json.loads(src.read_text())
+          rows = payload.get('skills')
+          expected = ['id','name','category_id','description','trigger_condition','boundary','priority','cost_class','latency_class','requires_auth','requires_freshness','safe_for_parallel','stateful','logs_required','inputs','outputs','fallback_chain','invoke_conditions','block_conditions','tool_definition']
+          if payload.get('schema_version') != '1.0':
+              raise SystemExit('Unexpected export schema version')
+          if not isinstance(rows, list) or len(rows) != 65:
+              raise SystemExit(f'Expected 65 live rows, got {None if not isinstance(rows,list) else len(rows)}')
+          for i, row in enumerate(rows, 1):
+              missing = [k for k in expected if k not in row]
+              if missing:
+                  raise SystemExit(f'Row {i} missing fields: {missing}')
+          ids = [r['id'] for r in rows]
+          if len(ids) != len(set(ids)):
+              raise SystemExit('Duplicate IDs in donor export')
+          out = Path('inventory/v7/live-export.json')
+          out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n')
+          print(f'Synced {len(rows)} rows / {len(expected)} definition fields')
+          PY
+      - name: Commit authoritative export when changed
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- inventory/v7/live-export.json)" ]; then
+            echo 'Authoritative live export unchanged'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add inventory/v7/live-export.json
+          git commit -m 'chore(r1): enrich authoritative v7 live export'
+          git push
