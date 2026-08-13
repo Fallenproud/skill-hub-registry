@@ -1,0 +1,8 @@
+node_modules/
+_site/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+package.json.tmp
