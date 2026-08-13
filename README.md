@@ -6,450 +6,225 @@
 
 **Canonical skills. Portable cognition. Reliable execution.**
 
-Skill Hub Registry is the Git-backed definition layer for reusable agent skills. It separates human/agent-readable methodology from deterministic runtime contracts, preserves provenance across migrations, and compiles a lightweight registry index that Skill Hub, Sophie-X, and compatible runtimes can discover progressively.
+Skill Hub Registry is the Git-backed definition layer for reusable agent skills. It separates native skill cognition from runtime state and preserves archaeology/external ecosystems as evidence until they pass explicit Foundry and compatibility gates.
 
-> **Core rule:** Git/files define **what a skill is**. Runtime/control-plane services define **what happens when it runs**.
+> **Core rule:** Git/files define **what a native skill is**. Runtime/control-plane services define **what happens when it runs**. External inventories do not become executable merely because they exist.
 
 ## Current repository state
 
 | Surface | Current state |
 |---|---:|
 | Native file-backed skill packages | **17** |
-| Preserved historical archaeology candidates | **35** |
+| Historical archaeology candidates | **35** |
 | Post-July reusable capability candidates | **28** |
-| Preserved candidate records | **63** |
-| Root taxonomy families | **12** |
-| Registry tests | **5 / 5 passing** |
-| Compiler | **Deterministic + content-addressed** |
+| Internal preserved candidate records | **63** |
+| OpenClaw external ecosystem references | **65** |
+| OpenClaw native promotions from import | **0** |
+| Registry/inventory tests | **8 / 8 passing** |
+| Native compiler | **Deterministic + content-addressed** |
 | v7 migration strategy | **db → hybrid → files** |
-| Existing Skill Hub/Sophie API contract | **Preserved during migration** |
+| Existing Skill Hub/Sophie API contract | **Preserved** |
 
-The repository intentionally contains **more preserved candidates than native skills**. Discovery is not promotion. A recovered workflow can remain L0/L1 in `inventory/` until its contracts, evidence, and boundaries are strong enough to enter `skills/`.
-
----
-
-## Why this exists
-
-A database row is useful operational state, but it is a poor long-term source of truth for reusable cognition.
-
-A canonical skill needs to survive UI rewrites, model changes, database migrations, and agent/runtime replacements while remaining readable and versionable.
-
-Each native skill therefore has two primary layers:
+## Architecture
 
 ```text
-SKILL.md
-  human + agent-readable methodology
+skills/                         canonical native packages only
+  <category>/<slug>/
+    SKILL.md
+    skill.json
 
-skill.json
-  deterministic routing, contracts, policy,
-  compatibility, provenance and runtime binding
+inventory/
+  historical-candidates.json
+  post-july-delta.json
+  duplicate-decisions.json
+  external/
+    openclaw/                   reference / qualification inventory
+
+sources/
+  openclaw/                     exact preserved source catalog + schema
+
+foundry/                        archaeology → qualification → promotion
+runtime-contracts/              invocation / migration / compatibility boundaries
+profiles/                       project/domain-specific doctrine
+src/ + scripts/ + tests/        deterministic compiler/import/validation
 ```
 
-The compiler validates these packages and produces:
+The native compiler scans `skills/` only. `inventory/`, `sources/`, profiles, and external ecosystem records remain outside executable registry scope.
+
+## Native skill format
+
+```text
+skills/<category>/<slug>/
+├─ SKILL.md       # agent/human-readable methodology
+└─ skill.json     # deterministic routing, contracts, policy and binding metadata
+```
+
+The compiler validates native packages and emits:
 
 ```text
 generated/registry.index.json
 ```
 
-Consumers can discover the lightweight index first and hydrate full `SKILL.md` content only when a skill is selected.
+The index is content-addressed; identical native skill content produces identical registry output.
 
----
+## OpenClaw inventory import
 
-## Architecture
-
-```text
-                     ┌──────────────────────────────┐
-                     │   Git-backed skill packages │
-                     │                              │
-                     │  SKILL.md                    │
-                     │  skill.json                  │
-                     │  schemas / examples / tests │
-                     └──────────────┬───────────────┘
-                                    │
-                            validate + compile
-                                    │
-                     ┌──────────────▼───────────────┐
-                     │     Registry compiler       │
-                     │                              │
-                     │ deterministic index         │
-                     │ content hashes              │
-                     │ dependency checks           │
-                     └──────────────┬───────────────┘
-                                    │
-                 ┌──────────────────┼──────────────────┐
-                 ▼                  ▼                  ▼
-         Skill Hub runtime     Sophie-X / agents   Registry APIs
-                 │
-                 ▼
-        operational projection
-             / Supabase
-```
-
-### Definition plane
-
-Git owns:
-
-- skill identity and semantic version
-- methodology and boundaries
-- routing metadata
-- input/output contracts
-- provenance
-- compatibility
-- execution binding declaration
-- schemas/examples/tests
-
-### Operational plane
-
-Skill Hub/Supabase remain appropriate for:
-
-- enable/disable state
-- tenant/user permissions
-- invocation history
-- analytics and success rate
-- runtime health
-- cost/latency telemetry
-- logs and traces
-- installed skill state
-- callbacks and execution sessions
-
-This keeps **definition history** and **runtime state** from becoming the same thing.
-
----
-
-## Repository map
+The prior OpenClaw ecosystem catalog is now preserved and normalized without changing the canonical architecture.
 
 ```text
-skill-hub-registry/
-├─ assets/
-│  ├─ readme/                  # selected GitHub README hero
-│  └─ onboarding/              # reusable HTML/PPTX visual modules
-│
-├─ skills/                     # native loadable packages
-│  ├─ core/
-│  ├─ brand/
-│  ├─ governance/
-│  ├─ meta/
-│  ├─ ux/
-│  ├─ audit/
-│  ├─ agent/
-│  ├─ orchestration/
-│  ├─ runtime/
-│  ├─ deployment/
-│  └─ research/
-│
-├─ candidates/                 # pointer/readme for preserved candidate policy
-│
-├─ profiles/
-│  ├─ project-specific/        # valuable project doctrine kept isolated
-│  └─ domain/                  # intentional domain specializations
-│
-├─ foundry/                    # archaeology → promotion methodology
-├─ runtime-contracts/          # authorization / invocation / migration contracts
-├─ inventory/                  # machine-readable archaeology ledgers
-├─ sources/                    # provenance register + preserved master ledger
-├─ migration/                  # v7 export/import/parity/census work
-├─ schemas/                    # manifest/contract schemas
-├─ generated/                  # compiled registry output
-├─ src/                        # compiler + validation logic
-├─ scripts/                    # migration and site build utilities
-├─ tests/                      # registry/foundry invariant tests
-├─ site/                       # static onboarding / demonstration surface
-└─ .github/workflows/          # CI + GitHub Pages deployment
+sources/openclaw/openclaw_ecosystem_catalog.csv.gz
+sources/openclaw/openclaw_ecosystem_schema.csv
+        ↓ deterministic import
+inventory/external/openclaw/index/part-01.json … part-13.json
+inventory/external/openclaw/schema.json
+inventory/external/openclaw/summary.json
 ```
 
----
+Imported state:
 
-## Native foundation included now
+- **65** external projects
+- **14** P0 immediate-evaluation records
+- **15** P1 high-value prototype records
+- **19** P2 selective/reference records
+- **17** P3 low-priority/current-mismatch records
+- **65 / 65** retain `Tentative — user review required`
+- **0** automatic native promotions
 
-The first scaffold promotes only capabilities with enough reusable structure to justify a native package. Current examples include:
+The original strategic scores and integration notes are preserved as historical evaluation context, not current proof of repository quality, security, licensing, compatibility, or availability.
 
-- **LLM Core** — backwards-compatible execution reference
-- **Brand Identity Packaging**
-- **Production Reality Gate**
-- **Capability Conditioning Protocol**
-- **Skill Archaeologist**
-- **Skill Creator**
-- **Screenshot to Blueprint**
-- **Frontend Fidelity Reconstruction**
-- **Toptier Topology**
-- **Systems Auditor**
-- **Legacy Donor Extraction**
-- **Agent Creation & Packaging**
-- **Multi-Agent Orchestration**
-- **Human Approval Gate**
-- **Registry Migration & Parity Auditor**
-- **Deployment-Ready Package Builder**
-- **Evidence-Grounded Research**
-
-Everything else discovered so far remains preserved in `inventory/` with a merge target and next action instead of being falsely promoted.
-
----
-
-## Skill package format
-
-Minimum package:
+### Qualification boundary
 
 ```text
-skills/<category>/<slug>/
-├─ SKILL.md
-└─ skill.json
+discovery
+→ static qualification
+→ sandbox qualification
+→ compatibility testing
+→ evidence capture
+→ governed treatment decision
 ```
 
-Optional additions:
+Allowed treatment results:
 
-```text
-schemas/
-examples/
-references/
-scripts/
-runtime/
-tests/
-```
+`ADOPT | ADAPTER | REFERENCE | DEFER | REJECT`
 
-### `SKILL.md`
+`openclaw/agent-skills` is a discovery source, **not** authorization to mirror an external skill registry. Individual capabilities must pass the normal Foundry/provenance/security/runtime gates before native promotion.
 
-Contains operational cognition:
+See:
 
-- purpose
-- invocation boundary
-- inputs
-- outputs
-- workflow/method
-- constraints
-- quality gates
-- failure behavior
-
-### `skill.json`
-
-Contains deterministic machine metadata:
-
-- stable ID + slug
-- semantic version
-- category
-- status + maturity
-- routing trigger/boundary
-- input/output contracts
-- execution kind/binding
-- policy flags
-- compatibility
-- provenance
-- dependencies
-
-See [`docs/SKILL_FORMAT.md`](docs/SKILL_FORMAT.md).
-
----
-
-## Maturity model
-
-| Level | Meaning | Promotion gate |
-|---|---|---|
-| **L0 — Captured** | Source material found | Source + provenance recorded |
-| **L1 — Documented** | Reusable workflow described | Skill draft + isolation notes |
-| **L2 — Structured** | Contracts/runtime rules defined | Schema/runtime validation |
-| **L3 — Tested** | Executed against real specimen | Tests + evidence pass |
-| **L4 — Production-ready** | Versioned, secure, failure-aware | Verifier + integrity checks |
-| **L5 — Composable** | Proven inside larger workflows | Composition tests pass |
-
-A polished README, screenshot, prompt, or registry row does **not** raise maturity by itself.
-
----
+- [`docs/OPENCLAW_IMPORT.md`](docs/OPENCLAW_IMPORT.md)
+- [`runtime-contracts/openclaw-compatibility.md`](runtime-contracts/openclaw-compatibility.md)
+- [`inventory/external/openclaw/README.md`](inventory/external/openclaw/README.md)
 
 ## Leave No Reusable Skill Behind
 
-The Skill Foundry preserves archaeology separately from canonical execution.
+Discovery is not promotion.
 
 ```text
-Search historical work
+Search historical/external work
         ↓
 Capture provenance
         ↓
-Extract transformation
+Extract transformation/capability
         ↓
-Isolate project/domain specifics
+Isolate project/domain/external specifics
         ↓
-Classify maturity/evidence
+Classify evidence + maturity
         ↓
 Deduplicate by contract
         ↓
-Draft skill/runtime/profile
+Qualify security/dependencies/runtime
+        ↓
+Draft skill/profile/adapter decision
         ↓
 Validate + test
         ↓
-Promote
+Promote only when justified
 ```
 
-The July 14 archaeology ledger is preserved at:
+This lets the registry preserve useful work without becoming a folder of prompts or an unreviewed marketplace mirror.
+
+## Project separation
+
+Project-specific identity and doctrine remain under `profiles/` or future `specimens/`. External ecosystem suggestions may mention target products, but those suggestions never authorize cross-project coupling.
+
+## Skill Hub v7 migration
+
+The storage migration remains independent of the OpenClaw import:
 
 ```text
-sources/MASTER_SKILL_LEDGER.md
-```
-
-Machine-readable mirrors live under `inventory/` and `sources/source-register.json`.
-
-Read [`foundry/ARCHAEOLOGY_PROTOCOL.md`](foundry/ARCHAEOLOGY_PROTOCOL.md) for the canonical process.
-
----
-
-## Project separation rule
-
-Project-specific material is valuable evidence but does not automatically become universal skill behavior.
-
-Examples currently preserved as profiles include:
-
-- AIKO onboarding source profile
-- AIKO brand asset-pack source profile
-- Sophie-X diagram-language source profile
-- Sophie-X runtime-workspace source profile
-- Norway market intelligence domain profile
-
-The reusable transformation is extracted into a domain-neutral skill where possible; project identity stays in `profiles/` or future `specimens/`.
-
----
-
-## v7 → file-backed migration
-
-The existing Skill Hub stays online throughout migration.
-
-```text
-1. Export live registry
+1. Export live Skill Hub registry
 2. Preserve stable IDs
 3. Generate SKILL.md + skill.json packages
 4. Compile deterministic file registry
 5. Compare parity
 6. Run shadow routing
-7. Switch db → hybrid
-8. Switch hybrid → files only after gates pass
-9. Retain DB rollback until confidence window closes
+7. db → hybrid
+8. hybrid → files only after gates pass
+9. retain DB rollback until confidence window closes
 ```
 
-Supported source modes are defined in [`runtime-contracts/migration-source-selection.md`](runtime-contracts/migration-source-selection.md).
-
-**No Sophie-X storage-specific rewrite is required for the initial migration** as long as the existing Skill Hub API, HMAC/callback behavior, IDs, and invocation contract are preserved.
-
-The remaining blocking migration prerequisite is a fresh **live registry census**. See [`migration/live-registry-census/README.md`](migration/live-registry-census/README.md).
-
----
+The existing Skill Hub/Sophie-X API, authentication/callback behavior, IDs, and invocation contract remain the compatibility boundary during migration.
 
 ## Commands
 
 Requires **Node.js 22+**.
 
 ```bash
+npm run import:openclaw
 npm run validate
 npm run build
 npm test
 npm run site:build
-```
-
-Full local release gate:
-
-```bash
 npm run check
 ```
 
-Legacy v7 import after obtaining a registry export:
+`npm run check` deterministically regenerates the OpenClaw normalized inventory, validates native + internal + external invariants, recompiles the native registry, runs the test suite, and fails on committed-output drift.
+
+Legacy v7 import remains available with:
 
 ```bash
 npm run import:v7 -- path/to/v7-skills.json
 ```
 
-The initial compiler intentionally has **no third-party runtime dependency**.
-
----
-
-## Deterministic registry output
-
-`generated/registry.index.json` is content-addressed.
-
-The compiler hashes the canonical sorted registry entries and emits:
-
-```json
-{
-  "schema_version": "1.0",
-  "registry_hash": "…",
-  "count": 17,
-  "skills": []
-}
-```
-
-No volatile generation timestamp is included, so rebuilding identical skill content produces identical output.
-
----
-
-## Onboarding / demonstration site
-
-The reusable neon onboarding components are stored under `assets/onboarding/` and composed into a static demonstration surface under `site/`.
-
-The Pages workflow:
-
-```text
-validate registry
-→ compile registry index
-→ build static onboarding site
-→ upload Pages artifact
-→ deploy
-```
-
-After GitHub Pages is enabled with **GitHub Actions** as the publishing source, the repository can publish the onboarding surface without changing the Skill Hub runtime itself.
-
-See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
-
----
-
 ## CI invariants
 
-Pull requests and pushes to `main` verify:
+CI verifies that:
 
-- native manifest structure
-- unique IDs/slugs
-- `SKILL.md` presence
-- fallback/dependency references
-- archaeology inventory counts/IDs
-- project-specific profile separation
-- deterministic registry output
-- test suite
-- static site build
-
-Executable adapter bindings are explicit. A skill cannot become executable merely because a definition exists.
-
----
+- native manifests and `SKILL.md` packages validate;
+- native IDs/slugs and dependencies are coherent;
+- historical/delta inventories retain their expected counts;
+- OpenClaw source → normalized output is deterministic;
+- all **65** `OC-*` records stay external;
+- `native_promotion_count === 0` for the OpenClaw import;
+- external records cannot create native executable bindings;
+- project-specific profiles remain outside native packages;
+- the native registry remains deterministic/content-addressed;
+- tests and the static onboarding build pass.
 
 ## Roadmap
 
-**R0 — Registry foundation** ← current
+**R0 — Registry foundation** ✅  
+Native registry, Foundry boundaries, deterministic compiler, archaeology, CI, and external OpenClaw inventory import.
 
-**R1 — Live v7 census + parity migration**
+**R1 — Live v7 census + parity migration**  
+Authoritative deployed Skill Hub export, parity comparison, shadow mode, hybrid cutover.
 
-**R2 — Automated Skill Foundry**
+**R1.1 — External ecosystem qualification**  
+Current upstream/version/license/security verification for selected OpenClaw P0/P1 candidates; explicit treatment decisions only after evidence.
 
-**R3 — Signed/capability-gated execution**
+**R2 — Automated Skill Foundry**  
+Archaeology automation, normalization, deduplication, qualification, creation, evidence and promotion workflows.
 
-**R4 — Progressive discovery/load/invoke for Sophie-X and other agents**
+**R3 — Signed/capability-gated execution**  
+Signing, permission policy, approvals, audit events, retry/idempotency.
+
+**R4 — Progressive agent discovery/load/invoke**  
+Versioned, provenance-aware skill discovery for Sophie-X and compatible runtimes.
 
 See [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
----
-
-## Visual asset kit
-
-The repository includes the approved modular visual system for README, onboarding, HTML scaffolds, pitches, and architecture demonstrations:
-
-| Asset | Purpose |
-|---|---|
-| `assets/readme/skill-hub-registry-hero.webp` | canonical GitHub README hero |
-| `assets/onboarding/01-hero-lockup.webp` | page / deck title lockup |
-| `assets/onboarding/02-trust-badges.webp` | file-backed / versioned / validated / executable strip |
-| `assets/onboarding/03-registry-core.webp` | registry-core visual |
-| `assets/onboarding/04-capability-cluster.webp` | metadata / capabilities / policies |
-| `assets/onboarding/05-execution-cluster.webp` | dependencies / implementation / tests |
-| `assets/onboarding/06-pipeline.webp` | package → runtime execution pipeline |
-
----
-
 ## Contribution principle
 
-Do not add a skill because it sounds useful.
+Do not add a native skill because it sounds useful or because an external repository exists.
 
-Add a candidate when evidence exists. Promote a native skill only when its reusable transformation, routing boundary, contracts, policy, provenance, and maturity are explicit.
-
-That is how this registry can grow without becoming another folder full of prompts.
+Preserve evidence first. Promote only when the reusable transformation, routing boundary, contracts, provenance, dependencies, security posture, compatibility, maturity, and execution treatment are explicit.
