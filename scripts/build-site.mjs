@@ -22,4 +22,7 @@ await copyDir(path.join(root, 'assets'), path.join(out, 'assets'));
 await fs.mkdir(path.join(out, 'data'), { recursive: true });
 await fs.copyFile(path.join(root, 'generated', 'registry.index.json'), path.join(out, 'data', 'registry.index.json'));
 await fs.copyFile(path.join(root, 'inventory', 'post-july-delta.json'), path.join(out, 'data', 'post-july-delta.json'));
-console.log(`Built static onboarding site -> ${path.relative(root, out)}/`);
+await fs.copyFile(path.join(root, 'inventory', 'v7', 'live-census.json'), path.join(out, 'data', 'live-census.json'));
+await fs.copyFile(path.join(root, 'inventory', 'v7', 'shadow-evidence.json'), path.join(out, 'data', 'shadow-evidence.json'));
+await fs.copyFile(path.join(root, 'inventory', 'external', 'openclaw', 'summary.json'), path.join(out, 'data', 'openclaw-summary.json'));
+console.log(`Built dynamic static site -> ${path.relative(root, out)}/`);

@@ -3,44 +3,189 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Skill Hub Registry — Git-backed, versioned skill packages for agents and runtimes." />
+  <meta name="description" content="Skill Hub Registry — canonical, file-backed agent skills with deterministic compilation, provenance and explicit runtime bindings." />
+  <meta name="theme-color" content="#060910" />
   <title>Skill Hub Registry</title>
+  <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main>
-    <section class="hero panel">
-      <img src="assets/readme/skill-hub-registry-hero.webp" alt="Skill Hub Registry architecture hero" />
-      <div class="hero-copy">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient-grid" data-parallax="0.08"></div>
+    <div class="ambient-orb ambient-orb--pink" data-parallax="0.16"></div>
+    <div class="ambient-orb ambient-orb--cyan" data-parallax="-0.12"></div>
+  </div>
+
+  <header class="site-header" data-reveal>
+    <a class="brand" href="#top" aria-label="Skill Hub Registry home">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>Skill Hub <strong>Registry</strong></span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#architecture">Architecture</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#registry">Registry</a>
+      <a class="nav-cta" href="https://github.com/Fallenproud/skill-hub-registry">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy" data-reveal>
         <p class="eyebrow">CANONICAL SKILLS · PORTABLE COGNITION · RELIABLE EXECUTION</p>
-        <h1>Skill Hub Registry</h1>
-        <p>Git-backed skill packages with Markdown cognition, JSON contracts, deterministic indexes, provenance, and explicit runtime bindings.</p>
+        <h1>Skill Hub <span>Registry</span></h1>
+        <p class="hero-lede">Define agent skills as readable cognition plus strict machine contracts, validate them deterministically, and expose only the capability a runtime actually needs.</p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#architecture">Explore architecture</a>
+          <a class="button button--ghost" href="https://github.com/Fallenproud/skill-hub-registry">View repository ↗</a>
+        </div>
+        <ul class="feature-chips" aria-label="Registry attributes">
+          <li>File-backed</li><li>Versioned</li><li>Validated</li><li>Runtime-aware</li>
+        </ul>
+      </div>
+
+      <div class="hero-system" id="heroSystem" data-reveal data-parallax="0.06" aria-label="Animated Skill Hub Registry architecture">
+        <div class="hero-system__halo" aria-hidden="true"></div>
+        <div class="hero-system__stack hero-system__stack--left" id="heroLeftStack"></div>
+        <div class="registry-core" id="registryCore" tabindex="0">
+          <span class="registry-core__rings" aria-hidden="true"></span>
+          <span class="registry-core__mark brand-mark" aria-hidden="true"><span></span></span>
+          <strong>REGISTRY</strong>
+          <small>compiler core</small>
+        </div>
+        <div class="hero-system__stack hero-system__stack--right" id="heroRightStack"></div>
+        <svg class="hero-connectors" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+          <path class="connector connector--pink" d="M300 110 C390 110 390 240 470 270" />
+          <path class="connector connector--pink" d="M300 310 C395 310 405 310 470 310" />
+          <path class="connector connector--pink" d="M300 510 C390 510 390 385 470 350" />
+          <path class="connector connector--cyan" d="M700 110 C610 110 610 240 530 270" />
+          <path class="connector connector--cyan" d="M700 310 C605 310 595 310 530 310" />
+          <path class="connector connector--cyan" d="M700 510 C610 510 610 385 530 350" />
+        </svg>
       </div>
     </section>
 
-    <section class="stats" id="stats">
-      <article class="panel"><strong id="nativeCount">—</strong><span>Native packages</span></article>
-      <article class="panel"><strong id="historyCount">35</strong><span>Historical candidates</span></article>
-      <article class="panel"><strong id="deltaCount">—</strong><span>Post-ledger delta</span></article>
-      <article class="panel"><strong>12</strong><span>Skill families</span></article>
+    <section class="truth-strip" aria-label="Current registry state" data-reveal>
+      <article><span class="truth-dot truth-dot--green"></span><strong id="nativeCount">—</strong><small>native packages</small></article>
+      <article><span class="truth-dot truth-dot--cyan"></span><strong id="liveCount">—</strong><small>live v7 definitions</small></article>
+      <article><span class="truth-dot truth-dot--violet"></span><strong id="externalCount">—</strong><small>external references</small></article>
+      <article><span class="truth-dot truth-dot--pink"></span><strong id="driftCount">—</strong><small>shadow mismatches</small></article>
     </section>
 
-    <section class="panel pipeline"><img src="assets/onboarding/06-pipeline.webp" alt="Skill package pipeline" /></section>
+    <section class="section architecture-section" id="architecture">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">SKILL DEFINITION TOPOLOGY</p>
+        <h2>Every skill is more than a prompt.</h2>
+        <p>Metadata, capability contracts, policies, dependencies, implementation bindings and tests form one governed package. Hover or focus a card to trace its relationship to the compiler core.</p>
+      </div>
 
-    <section class="grid-two">
-      <article class="panel"><img src="assets/onboarding/04-capability-cluster.webp" alt="Metadata capabilities and policies" /></article>
-      <article class="panel"><img src="assets/onboarding/05-execution-cluster.webp" alt="Dependencies implementation and tests" /></article>
+      <div class="architecture-stage" id="architectureStage" data-reveal>
+        <div class="architecture-stack" id="architectureLeft"></div>
+        <div class="architecture-core" aria-live="polite">
+          <div class="architecture-core__pulse" aria-hidden="true"></div>
+          <span class="brand-mark brand-mark--large" aria-hidden="true"><span></span></span>
+          <p class="eyebrow">REGISTRY COMPILER</p>
+          <strong id="architectureCoreTitle">Skill package</strong>
+          <small id="architectureCoreDetail">Validated before promotion</small>
+          <div class="core-checks" aria-label="Compiler guarantees">
+            <span>Schema validation</span><span>Dependency resolution</span><span>Normalization</span><span>Index generation</span>
+          </div>
+        </div>
+        <div class="architecture-stack" id="architectureRight"></div>
+        <svg class="architecture-lines" viewBox="0 0 1200 720" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M330 125 C460 125 465 280 520 300" />
+          <path d="M330 360 C445 360 470 360 520 360" />
+          <path d="M330 595 C460 595 465 440 520 420" />
+          <path d="M870 125 C740 125 735 280 680 300" />
+          <path d="M870 360 C755 360 730 360 680 360" />
+          <path d="M870 595 C740 595 735 440 680 420" />
+        </svg>
+      </div>
     </section>
 
-    <section class="panel registry-section">
+    <section class="section pipeline-section" id="pipeline">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">DEFINE → VALIDATE → COMPILE → DISTRIBUTE</p>
+        <h2>A pipeline you can see move.</h2>
+        <p>The original infographic is now a responsive timeline. Scroll through the section and the execution path advances with you.</p>
+      </div>
+      <div class="pipeline-shell" id="pipelineShell" data-reveal>
+        <div class="pipeline-track" aria-hidden="true"><span id="pipelineProgress"></span></div>
+        <div class="pipeline-grid" id="pipelineGrid"></div>
+      </div>
+    </section>
+
+    <section class="section anatomy-section" id="anatomy">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">FILE-BACKED PACKAGE ANATOMY</p>
+        <h2>Readable by humans. Deterministic for machines.</h2>
+      </div>
+      <div class="anatomy-layout">
+        <div class="file-stack" id="fileStack" data-reveal></div>
+        <div class="compiler-bridge" data-reveal>
+          <div class="compiler-bridge__beam" aria-hidden="true"></div>
+          <span class="compiler-cube" aria-hidden="true"></span>
+          <p class="eyebrow">COMPILE + VALIDATE</p>
+          <h3>One content-addressed registry</h3>
+          <ul>
+            <li>Schema validation</li>
+            <li>Stable IDs + versions</li>
+            <li>Dependency resolution</li>
+            <li>Runtime binding truth</li>
+          </ul>
+        </div>
+        <div class="compiled-card" data-reveal>
+          <div class="compiled-card__layers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="eyebrow">COMPILED REGISTRY</p>
+          <h3>registry.index.json</h3>
+          <p>Discoverable, normalized, portable and safe to hydrate progressively.</p>
+          <div class="compiled-badges"><span>Canonical</span><span>Discoverable</span><span>Portable</span><span>Runtime-aware</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section registry-section" id="registry">
+      <div class="section-heading registry-heading" data-reveal>
+        <div>
+          <p class="eyebrow">LIVE COMPILED INDEX</p>
+          <h2>Discover first. Hydrate on selection.</h2>
+          <p>The page reads the generated registry artifact from the same Pages build. Search happens against the shipped index, not a decorative mockup.</p>
+        </div>
+        <label class="registry-search">
+          <span>Search native skills</span>
+          <input id="skillSearch" type="search" placeholder="Search name, category, capability…" autocomplete="off" />
+        </label>
+      </div>
+      <div class="registry-toolbar" data-reveal>
+        <span id="skillResultCount">Loading registry…</span>
+        <span class="status-pill"><i></i><span id="shadowStatus">Shadow evidence loading</span></span>
+      </div>
+      <div id="skillGrid" class="skill-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section confidence-section" data-reveal>
       <div>
-        <p class="eyebrow">COMPILED REGISTRY</p>
-        <h2>Discover only what you need. Hydrate the full skill on selection.</h2>
-        <p>The index stays lightweight; SKILL.md content is progressively disclosed when a runtime selects a skill.</p>
+        <p class="eyebrow">R1-D · OBSERVATIONAL SHADOW MODE</p>
+        <h2>Files observe. Database still serves.</h2>
+        <p>The migration surface remains intentionally fail-open to the deployed database while repeated shadow passes accumulate confidence.</p>
       </div>
-      <div id="skillGrid" class="skill-grid"></div>
+      <div class="confidence-metrics">
+        <article><strong id="fieldsCompared">—</strong><span>definition fields compared</span></article>
+        <article><strong id="dbSkillCount">—</strong><span>DB skills</span></article>
+        <article><strong id="fileSkillCount">—</strong><span>file shadow skills</span></article>
+        <article><strong id="mismatchCount">—</strong><span>field mismatches</span></article>
+      </div>
     </section>
   </main>
+
+  <footer>
+    <span>Skill Hub Registry</span>
+    <span>Git-backed definitions · explicit runtime truth</span>
+    <a href="https://github.com/Fallenproud/skill-hub-registry">Source ↗</a>
+  </footer>
+
   <script src="app.js" type="module"></script>
 </body>
 </html>
