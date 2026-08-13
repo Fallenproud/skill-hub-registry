@@ -17,14 +17,14 @@ Skill Hub Registry is the Git-backed definition layer for reusable agent skills.
 | Native file-backed skill packages | **17** |
 | Preserved historical archaeology candidates | **35** |
 | Post-July reusable capability candidates | **28** |
-| Preserved candidate capsules | **63** |
+| Preserved candidate records | **63** |
 | Root taxonomy families | **12** |
 | Registry tests | **5 / 5 passing** |
 | Compiler | **Deterministic + content-addressed** |
 | v7 migration strategy | **db → hybrid → files** |
 | Existing Skill Hub/Sophie API contract | **Preserved during migration** |
 
-The repository intentionally contains **more preserved candidates than native skills**. Discovery is not promotion. A recovered workflow can remain L0/L1 in `candidates/` until its contracts, evidence, and boundaries are strong enough to enter `skills/`.
+The repository intentionally contains **more preserved candidates than native skills**. Discovery is not promotion. A recovered workflow can remain L0/L1 in `inventory/` until its contracts, evidence, and boundaries are strong enough to enter `skills/`.
 
 ---
 
@@ -137,7 +137,8 @@ skill-hub-registry/
 │  ├─ deployment/
 │  └─ research/
 │
-├─ candidates/                 # preserved, NOT runtime-loaded
+├─ candidates/                 # pointer/readme for preserved candidate policy
+│
 ├─ profiles/
 │  ├─ project-specific/        # valuable project doctrine kept isolated
 │  └─ domain/                  # intentional domain specializations
