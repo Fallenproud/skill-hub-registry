@@ -82,7 +82,7 @@ Translate the approved visual assets into responsive, semantic, animated web com
 6. [x] Surface live R1 census + shadow evidence.
 7. [x] Add reveal, parallax, connector, pointer-depth and pipeline-progress effects.
 8. [x] Add reduced-motion and keyboard/focus behavior.
-9. [ ] Run Pages build/validation workflow after commit.
+9. [x] Run Pages build/validation workflow after commit — validation, build, artifact upload and Pages deploy all passed on workflow run 31694476501.
 10. [ ] Visual QA deployed URL at desktop/tablet/mobile widths.
 11. [ ] Lighthouse/accessibility follow-up after deployed visual inspection.
 
