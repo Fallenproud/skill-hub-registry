@@ -96,7 +96,7 @@ test('R1 v7 source census preserves historical source evidence', async () => {
   assert.deepEqual(census.runtime_bound_ids, Array.from({ length: 10 }, (_, index) => `core-${String(index + 1).padStart(3, '0')}`));
 });
 
-test('R1 source reconciliation detects existing native ID collisions without promotion', async () => {
+test('R1 native ID rekeys preserve deployed v7 identities and remove collisions', async () => {
   const census = await readJson('inventory/v7/source-census.json');
   const nativeIndex = await readJson('generated/registry.index.json');
   const result = reconcileV7({ census, nativeIndex });
@@ -106,13 +106,19 @@ test('R1 source reconciliation detects existing native ID collisions without pro
   assert.equal(result.counts.native, 17);
   assert.equal(result.native_promotion_count, 0);
   assert.equal(result.exact_native_matches.some((item) => item.id === 'core-001' && item.name === 'LLM'), true);
-  assert.deepEqual(result.native_id_collisions.map((item) => item.id), ['ux-001', 'ux-002']);
+  assert.deepEqual(result.native_id_collisions, []);
+  assert.equal(nativeIndex.skills.some((skill) => skill.id === 'ux-007' && skill.slug === 'screenshot-to-blueprint'), true);
+  assert.equal(nativeIndex.skills.some((skill) => skill.id === 'ux-008' && skill.slug === 'frontend-fidelity-reconstruction'), true);
+  assert.equal(nativeIndex.skills.some((skill) => skill.id === 'ux-001' || skill.id === 'ux-002'), false);
+  assert.equal(result.counts.source_only, 64);
+  assert.equal(result.counts.native_only, 16);
   assert.equal(result.live.status, 'required');
   assert.equal(result.live.unresolved_delta, 23);
+  assert.deepEqual(result.blocking_findings.map((finding) => finding.code), ['live_db_export_required']);
   assert.equal(result.safe_to_shadow, false);
 });
 
-test('R1 authoritative live export is exact with source and current 65-skill contract', async () => {
+test('R1 authoritative live export is exact and clears the shadow-readiness gate', async () => {
   const census = await readJson('inventory/v7/source-census.json');
   const liveCensus = await readJson('inventory/v7/live-census.json');
   const liveExport = await readJson('inventory/v7/live-export.json');
@@ -132,6 +138,7 @@ test('R1 authoritative live export is exact with source and current 65-skill con
   assert.equal(result.live.count_matches_claim, true);
   assert.equal(result.live.identity_matches_source, true);
   assert.equal(result.live.duplicate_ids.length, 0);
-  assert.deepEqual(result.blocking_findings.map((finding) => finding.code), ['native_id_collisions']);
-  assert.equal(result.safe_to_shadow, false, 'native ID collisions must still block shadow readiness');
+  assert.deepEqual(result.native_id_collisions, []);
+  assert.deepEqual(result.blocking_findings, []);
+  assert.equal(result.safe_to_shadow, true);
 });
