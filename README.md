@@ -24,14 +24,17 @@ Skill Hub Registry is the Git-backed definition layer for reusable agent skills.
 | v7 authoritative live database rows | **65** |
 | v7 explicit runtime adapters | **10** |
 | Historical static v7 product claim | **88** |
-| Current corrected v7 product/live contract | **65** |
+| Current v7 product/live contract | **65** |
 | Live-only / source-missing v7 rows | **0 / 0** |
-| Registry/inventory/R1 tests | **11 / 11 passing** |
+| Native v7 ID collisions | **0** |
+| First R1-D definition parity | **65 × 20, 0 mismatches** |
 | Native compiler | **Deterministic + content-addressed** |
-| v7 migration strategy | **db → hybrid → files** |
-| Existing Skill Hub API/runtime contract | **Preserved** |
+| Migration serving authority | **DB PRIMARY / FILE SHADOW** |
+| Existing Skill Hub/Sophie API contract | **Preserved** |
 
-The 65 v7 definitions remain a **separate census population pending governed native treatment**. They are not added blindly to the canonical count.
+GitHub Pages onboarding: `https://fallenproud.github.io/skill-hub-registry/`
+
+The 65 deployed v7 definitions remain a **separate migration population**. They are not blindly promoted into the 17-package native registry.
 
 ## Architecture
 
@@ -45,7 +48,7 @@ inventory/
   historical-candidates.json
   post-july-delta.json
   duplicate-decisions.json
-  v7/                           deployed/legacy source + live census evidence
+  v7/                           deployed source/live/shadow evidence
   external/
     openclaw/                   reference / qualification inventory
 
@@ -56,7 +59,7 @@ profiles/                       project/domain-specific doctrine
 src/ + scripts/ + tests/        deterministic compiler/census/import/validation
 ```
 
-The native compiler scans `skills/` only. `inventory/`, `sources/`, profiles, v7 census records, and external ecosystem records remain outside executable registry scope.
+The native compiler scans `skills/` only. `inventory/`, sources, profiles, v7 census evidence, and external ecosystem records stay outside native executable-registry scope.
 
 ## Native skill format
 
@@ -66,11 +69,11 @@ skills/<category>/<slug>/
 └─ skill.json     # deterministic routing, contracts, policy and binding metadata
 ```
 
-The compiler validates native packages and emits `generated/registry.index.json`. The index is content-addressed; identical native skill content produces identical registry output.
+The compiler emits `generated/registry.index.json`. The index is content-addressed: identical native skill content produces identical registry output.
 
-## R1 — Skill Hub v7 census
+## R1 — Skill Hub v7 migration
 
-The historical source census is pinned to `Fallenproud/skill-hub-builder` at commit `aba0a27320a1b8e124f85c2b018d186600f3b203`.
+The historical source census is pinned to `Fallenproud/skill-hub-builder`. Current reconciled truth:
 
 ```text
 historical static product claim      88
@@ -78,21 +81,46 @@ migration-confirmed definitions      65
 authoritative live DB rows           65
 explicit runtime adapters            10
 live/source identity drift            0
+native ID collisions                  0
+shadow definition mismatches          0
 ```
 
-The previously inferred `88 - 65 = 23` live-database delta is closed. The authoritative Supabase census contains exactly 65 skill rows, matching the 65 migration-confirmed identities. The 88 value was stale static UI/SEO/product metadata and has been corrected to 65 in the Skill Hub source.
+The old `88 - 65 = 23` live-database inference is closed. Supabase contains exactly 65 skill rows matching the 65 migration-confirmed identities; 88 was stale static UI/SEO/product metadata.
 
-Live RLS was also verified: public reads remain available, while writes to `skills` and `categories` require an authenticated admin role.
+### Stable identity resolution
 
-Native reconciliation currently finds:
+Deployed identities were preserved:
 
-- `core-001` / `LLM` — exact stable-ID/name match.
-- `ux-001` — collision: v7 `UI-Design` vs native `Screenshot to Blueprint`.
-- `ux-002` — collision: v7 `UX-Research` vs native `Frontend Fidelity Reconstruction`.
+- `ux-001` → `UI-Design`
+- `ux-002` → `UX-Research`
 
-R1-A and R1-B are complete. R1-C is blocked only by those two native ID collisions. No storage-authority cutover has occurred.
+Provisional native packages were rekeyed:
 
-See [`docs/R1_V7_CENSUS.md`](docs/R1_V7_CENSUS.md).
+- `Screenshot to Blueprint` → `ux-007`
+- `Frontend Fidelity Reconstruction` → `ux-008`
+
+`core-001 / LLM` remains the exact stable-ID/name native match.
+
+### R1-D shadow mode
+
+Skill Hub now runs the migration boundary as:
+
+```text
+Supabase DB  → PRIMARY / serves production definitions
+Git v7 file  → SHADOW / comparison only
+```
+
+The first full comparison checked all 65 skills across 20 definition fields and returned **0 identity or field mismatches**. The same R1-D CI run passed production build and changed-surface lint.
+
+Shadow results cannot affect routing, adapter selection, invocation, or returned definitions. Shadow fetch/audit failures fail open to DB. Existing HMAC, callbacks, IDs, `list-skills`, `invoke`, and Sophie-facing contracts are unchanged.
+
+R1-A/B/C are complete. R1-D is active. **R1-E `db → hybrid` remains gated until repeated clean evidence closes the confidence window.**
+
+See:
+
+- [`docs/R1_V7_CENSUS.md`](docs/R1_V7_CENSUS.md)
+- [`inventory/v7/live-census.json`](inventory/v7/live-census.json)
+- [`inventory/v7/shadow-evidence.json`](inventory/v7/shadow-evidence.json)
 
 ## OpenClaw inventory import
 
@@ -116,7 +144,7 @@ Imported state:
 - **65 / 65** retain `Tentative — user review required`
 - **0** automatic native promotions
 
-The original strategic scores and integration notes are historical evaluation context, not current proof of repository quality, security, licensing, compatibility, or availability.
+External discovery does not authorize automatic mirroring or native promotion.
 
 ### Qualification boundary
 
@@ -132,8 +160,6 @@ discovery
 Allowed treatment results:
 
 `ADOPT | ADAPTER | REFERENCE | DEFER | REJECT`
-
-External discovery never authorizes automatic mirroring or native promotion.
 
 ## Leave No Reusable Skill Behind
 
@@ -165,21 +191,19 @@ Promote only when justified
 
 Project-specific identity and doctrine remain under `profiles/` or future `specimens/`. External ecosystem suggestions may mention target products, but those suggestions never authorize cross-project coupling.
 
-## Skill Hub v7 migration
+## Skill Hub v7 migration sequence
 
 ```text
 1. Pin and census v7 source                     ✅
 2. Export current live Skill Hub database       ✅
 3. Reconcile source ↔ live identities           ✅ 65/65 exact
-4. Resolve native stable-ID collisions           ⏳ ux-001 / ux-002
-5. Preserve deployed stable IDs where required
-6. Run shadow DB/file routing comparisons
-7. db → hybrid only after parity gates pass
-8. retain DB rollback through confidence window
-9. hybrid → files only after evidence closes
+4. Resolve native stable-ID collisions          ✅ ux-007 / ux-008 rekeys
+5. Capture full live definition snapshot        ✅ 65 × 20 fields
+6. Run DB/file shadow comparisons               🟢 active; first pass exact
+7. Accumulate confidence-window evidence        ⏳
+8. db → hybrid only after explicit gate         ⛔
+9. hybrid → files only after evidence closes    ⛔
 ```
-
-The existing Skill Hub API, authentication/callback behavior, IDs, and invocation contract remain the compatibility boundary during census and migration.
 
 ## Commands
 
@@ -196,15 +220,7 @@ npm run site:build
 npm run check
 ```
 
-`npm run census:v7` validates historical source evidence, the committed authoritative live export, and native parity. `npm run reconcile:v7` is read-only; a non-zero exit means shadow mode remains blocked.
-
-Legacy package generation remains available for a later governed promotion/cutover step:
-
-```bash
-npm run import:v7 -- path/to/approved-v7-skills.json
-```
-
-It is **not** the census mechanism.
+`npm run census:v7` validates historical source evidence, the authoritative live export, and native parity. `npm run reconcile:v7` is read-only.
 
 ## CI invariants
 
@@ -212,27 +228,27 @@ CI verifies that:
 
 - native manifests and `SKILL.md` packages validate;
 - native IDs/slugs and dependencies are coherent;
-- historical/delta inventories retain their expected counts;
-- historical v7 source evidence remains preserved rather than rewritten;
-- the authoritative v7 live export remains 65 rows with exact source identity parity;
-- the 10 v7 runtime bindings remain explicitly separate from definition count;
-- v7/native ID collisions are detected rather than overwritten;
+- historical/delta inventories retain expected counts;
+- historical v7 evidence remains preserved rather than rewritten;
+- the authoritative v7 live export remains 65 rows;
+- native deployed-ID collisions remain resolved;
+- the 10 v7 runtime bindings remain separate from definition count;
 - v7 census performs zero automatic native promotions;
-- OpenClaw normalized output is deterministic and remains external;
+- OpenClaw normalized output is deterministic and external;
 - project-specific profiles remain outside native packages;
 - the native registry remains deterministic/content-addressed;
-- tests and the static onboarding build pass.
+- tests and static onboarding build pass.
 
 ## Roadmap
 
 **R0 — Registry foundation** ✅  
-Native registry, Foundry boundaries, deterministic compiler, archaeology, CI, and external OpenClaw inventory import.
+Native registry, Foundry boundaries, deterministic compiler, archaeology, CI, Pages, and external OpenClaw inventory.
 
 **R1 — v7 census + parity** 🚧  
-Source census and authoritative live DB census are complete. Collision resolution is next, followed by shadow mode and governed hybrid cutover.
+R1-A/B/C complete. R1-D shadow mode active with first full-definition pass exact. R1-E remains gated by the confidence window.
 
 **R1.1 — External ecosystem qualification**  
-Current upstream/version/license/security verification for selected OpenClaw P0/P1 candidates; explicit treatment decisions only after evidence.
+Current upstream/version/license/security verification for selected OpenClaw candidates; explicit treatment decisions only after evidence.
 
 **R2 — Automated Skill Foundry**  
 Archaeology automation, normalization, deduplication, qualification, creation, evidence and promotion workflows.
@@ -241,12 +257,10 @@ Archaeology automation, normalization, deduplication, qualification, creation, e
 Signing, permission policy, approvals, audit events, retry/idempotency.
 
 **R4 — Progressive agent discovery/load/invoke**  
-Versioned, provenance-aware skill discovery for compatible runtimes.
+Versioned, provenance-aware skill discovery for Sophie-X and compatible runtimes.
 
 See [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
 ## Contribution principle
-
-Do not add a native skill because it sounds useful, because it exists in v7, or because an external repository exists.
 
 Preserve evidence first. Promote only when the reusable transformation, routing boundary, contracts, provenance, dependencies, security posture, compatibility, maturity, identity treatment, and execution state are explicit.
