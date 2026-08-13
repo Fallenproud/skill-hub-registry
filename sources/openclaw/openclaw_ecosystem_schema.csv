@@ -1,0 +1,22 @@
+﻿column_name,definition,data_type,example,required,validation_notes
+ecosystem_id,Stable internal row identifier,string,OC-001,Required,Do not reuse IDs when rows are removed.
+category,OpenClaw ecosystem grouping,enum/string,Agent Infrastructure & SDKs,Required,Preserve the supplied category unless formally reclassified.
+project,Display name of the project,string,ClawScan,Required,Case-preserving canonical name.
+repo_slug,Repository path segment,string,clawscan,Required,Verify against the official organization before automated cloning.
+repo_url,Canonical source repository URL,URL,https://github.com/openclaw/clawscan,Required,Use plain-text URL for portability.
+provided_description,Concise capability description,string,Composable security scanning harness for agent skills.,Required,"Source summary, not a substitute for repository audit."
+capability_layer,Architectural function served,enum/string,Agent security,Required,"Examples: orchestration, ingestion, validation, media, distribution."
+execution_mode,How it is delivered or run,enum/string,CLI / SDK,Required,"Examples: hosted service, native CLI, library, fixture, docs."
+primary_language,Primary implementation language,string,Go,Optional,Use Unknown when not verified.
+local_first,Whether data/execution primarily remains local,enum,Yes,Required,"Allowed: Yes, No, Partial."
+platform_fit,Operating-system or deployment compatibility,string,Windows,Required,Explicitly note macOS-only and server-only projects.
+primary_fit,Best-fit destination in the user's ecosystem,string,Daycostra + AIKOV,Required,Does not authorize merging product boundaries.
+strategic_value_score,Relative value to current user priorities,integer 0-100,97,Required,"Contextual score, not an objective project-quality score."
+priority_tier,Evaluation priority derived from score,enum,P0 — immediate evaluation,Required,P0 >=90; P1 80-89; P2 65-79; P3 <65.
+recommended_action,Next treatment for the project,enum/string,Prototype adapter immediately,Required,Prefer adapter/reference over direct core coupling.
+why_valuable_to_us,Specific strategic value explanation,string,Adds pre-install skill security evidence.,Required,Tie to actual AIKO/AIKOV/Sophie-X/Daycostra needs.
+integration_pattern,Safe proposed integration boundary,string,Pre-install validation stage,Required,"State adapter, contract, event, or evidence boundary."
+main_risk_or_overlap,Largest adoption risk or duplicated capability,string,Supply-chain and prompt-injection risk,Required,Include platform mismatch and authority risks.
+security_review_required,Whether formal security review is needed,enum,Mandatory,Required,"Allowed: Yes, No, Mandatory."
+source_basis,Where the row description and link came from,string,User snapshot + official org naming,Required,Add audited source URLs in later review passes.
+review_status,Human review lifecycle state,enum/string,Tentative — user review required,Required,Do not promote to Approved without user review.
