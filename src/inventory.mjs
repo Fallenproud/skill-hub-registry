@@ -6,7 +6,7 @@ import { normalizeV7LiveExport, validateV7SourceCensus } from './v7.mjs';
 async function readJson(file) { return JSON.parse(await fs.readFile(file, 'utf8')); }
 async function readJsonDirectory(dir) {
   const entries = (await fs.readdir(dir, { withFileTypes: true })).filter((entry) => entry.isFile() && entry.name.endsWith('.json')).sort((a, b) => a.name.localeCompare(b.name));
-  return Object.fromEntries(await Promise.all(entries.map(async (entry) => [entry.name, await readJson(path.join(dir, entry.name))]));
+  return Object.fromEntries(await Promise.all(entries.map(async (entry) => [entry.name, await readJson(path.join(dir, entry.name))])));
 }
 
 function distinctCount(items, key) {
