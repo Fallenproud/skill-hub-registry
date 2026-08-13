@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "evidence_id": "r1d-shadow-parity-2026-08-13-01",
+  "phase": "R1-D",
+  "observed_at": "2026-08-13T10:38:00Z",
+  "status": "pass",
+  "serving_authority": "db",
+  "shadow_mode": "active",
+  "counts": {
+    "db_skills": 65,
+    "file_skills": 65,
+    "definition_fields_compared": 20,
+    "missing_in_file": 0,
+    "missing_in_db": 0,
+    "field_mismatches": 0
+  },
+  "definition_fields": [
+    "id",
+    "name",
+    "category_id",
+    "description",
+    "trigger_condition",
+    "boundary",
+    "priority",
+    "cost_class",
+    "latency_class",
+    "requires_auth",
+    "requires_freshness",
+    "safe_for_parallel",
+    "stateful",
+    "logs_required",
+    "inputs",
+    "outputs",
+    "fallback_chain",
+    "invoke_conditions",
+    "block_conditions",
+    "tool_definition"
+  ],
+  "identity_resolution": {
+    "deployed_ids_preserved": {
+      "ux-001": "UI-Design",
+      "ux-002": "UX-Research"
+    },
+    "native_rekeys": {
+      "ux-007": "Screenshot to Blueprint",
+      "ux-008": "Frontend Fidelity Reconstruction"
+    },
+    "native_id_collisions": 0
+  },
+  "evidence": {
+    "skill_hub_repository": "Fallenproud/skill-hub-builder",
+    "skill_hub_commit": "eeff46a3ab1eb7c935779bbcbbf5ce0dfee1aa79",
+    "registry_repository": "Fallenproud/skill-hub-registry",
+    "registry_revision_verified": "7fefa620e615cfd325350132700c19e5ccd5b053",
+    "verification_workflow": "R1 verify shadow parity",
+    "verification_run_id": 31691945930,
+    "verification_result": "success",
+    "production_build": "success",
+    "r1_surface_lint": "success",
+    "lovable_project_id": "b3490f28-1b02-4a86-ab05-3b39460997cb",
+    "production_url": "https://my-agenthub.lovable.app"
+  },
+  "invariants": [
+    "Supabase DB remains the sole serving authority during R1-D.",
+    "Shadow results do not affect routing, adapter selection, invocation, or returned skill definitions.",
+    "Array ordering is preserved during definition comparison; object key ordering is canonicalized.",
+    "Shadow fetch or audit failures fail open to DB serving.",
+    "No native promotion or db-to-hybrid cutover occurred during this evidence pass."
+  ],
+  "next_gate": "Accumulate repeated clean shadow evidence through the confidence window before any db-to-hybrid decision."
+}
