@@ -80,7 +80,7 @@ test('project-specific profiles stay outside native skill packages', async () =>
   assert.ok(profiles.length >= 4);
 });
 
-test('R1 v7 source census is internally coherent', async () => {
+test('R1 v7 source census preserves historical source evidence', async () => {
   const census = await readJson('inventory/v7/source-census.json');
   assert.deepEqual(validateV7SourceCensus(census), []);
   assert.equal(census.counts.initial_seed_definitions, 64);
@@ -108,23 +108,26 @@ test('R1 source reconciliation detects existing native ID collisions without pro
   assert.equal(result.safe_to_shadow, false);
 });
 
-test('R1 live export reconciliation isolates DB-only rows deterministically', async () => {
+test('R1 authoritative live export is exact with source and current 65-skill contract', async () => {
   const census = await readJson('inventory/v7/source-census.json');
+  const liveCensus = await readJson('inventory/v7/live-census.json');
+  const liveExport = await readJson('inventory/v7/live-export.json');
   const nativeIndex = await readJson('generated/registry.index.json');
-  const liveRows = [
-    ...census.source_confirmed_skills,
-    ...Array.from({ length: 23 }, (_, index) => ({
-      id: `live-only-${String(index + 1).padStart(2, '0')}`,
-      name: `Synthetic Live Only ${index + 1}`,
-      category_id: 'custom'
-    }))
-  ];
+  const result = reconcileV7({
+    census,
+    nativeIndex,
+    liveRows: liveExport,
+    liveContractCount: liveCensus.counts.current_live_registry
+  });
 
-  const result = reconcileV7({ census, nativeIndex, liveRows });
-  assert.equal(result.counts.live, 88);
-  assert.equal(result.counts.live_only, 23);
+  assert.equal(result.counts.historical_claimed_live_registry, 88);
+  assert.equal(result.counts.claimed_live_registry, 65);
+  assert.equal(result.counts.live, 65);
+  assert.equal(result.counts.live_only, 0);
   assert.equal(result.counts.source_missing_from_live, 0);
   assert.equal(result.live.count_matches_claim, true);
+  assert.equal(result.live.identity_matches_source, true);
   assert.equal(result.live.duplicate_ids.length, 0);
+  assert.deepEqual(result.blocking_findings.map((finding) => finding.code), ['native_id_collisions']);
   assert.equal(result.safe_to_shadow, false, 'native ID collisions must still block shadow readiness');
 });
