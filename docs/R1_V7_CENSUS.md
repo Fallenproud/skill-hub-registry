@@ -1,8 +1,8 @@
 # R1 — Skill Hub v7 Census & Parity
 
-Status: **source census complete; authoritative live DB export required**.
+Status: **source census complete; live DB census complete; identity parity blocked only by two native ID collisions**.
 
-This phase inventories the legacy/deployed Skill Hub v7 before any storage-authority cutover. Census records are evidence only. They are not native promotions.
+R1 inventories the legacy/deployed Skill Hub v7 before any storage-authority cutover. Census records are evidence only. They are not native promotions.
 
 ## Source pinned
 
@@ -10,32 +10,46 @@ This phase inventories the legacy/deployed Skill Hub v7 before any storage-autho
 |---|---|
 | Repository | `Fallenproud/skill-hub-builder` |
 | Branch | `main` |
-| Census commit | `aba0a27320a1b8e124f85c2b018d186600f3b203` |
+| Historical source census commit | `aba0a27320a1b8e124f85c2b018d186600f3b203` |
+| Static-count correction commit | `f944372350d228e1d230ca1b2ebdfc79f3dd1c40` |
 | Deployed surface | `https://my-agenthub.lovable.app` |
 | Operational store | Supabase |
 
-Machine-readable source census: `inventory/v7/source-census.json`.
+Machine-readable evidence:
 
-## Four-count truth
+- `inventory/v7/source-census.json`
+- `inventory/v7/live-export.json`
+- `inventory/v7/live-census.json`
 
-The v7 source currently exposes four different truths that must not be collapsed into one number:
+## Reconciled count truth
+
+The historical source snapshot and the authoritative live database expose distinct truths that must remain separate:
 
 | Truth | Count | Evidence meaning |
 |---|---:|---|
-| Public/deployed product claim | **88** | UI/public metadata says the registry contains 88 skills |
-| Initial migration seed | **64** | Original migration inserts 64 definitions across 10 categories |
-| Migration-confirmed definitions | **65** | Later migration adds `sys-006` / `Skill-Registry-Manifest` |
-| Explicit runtime adapters | **10** | Source has executable adapters for `core-001` through `core-010` |
+| Historical static product claim | **88** | Pre-census UI/SEO/metadata claimed 88 skills |
+| Authoritative current live registry | **65** | Current `public.skills` row count |
+| Initial migration seed | **64** | Original migration inserts 64 definitions |
+| Migration-confirmed definitions | **65** | Later migration adds `sys-006` |
+| Explicit runtime adapters | **10** | `core-001` through `core-010` have explicit adapter bindings |
 
-Therefore:
+The earlier inferred `88 - 65 = 23` unresolved delta is now closed: **those 23 records do not exist in the live database**. The 88 value was stale static product metadata. Current Skill Hub static product copy has been corrected to 65 while database-derived counters remain dynamic.
 
-`88 claimed - 65 migration-confirmed = 23 unresolved live-database records`
+## Authoritative live DB census
 
-Those 23 records are **not considered identified** until an authoritative export of the current `public.skills` table is obtained.
+`public.skills` currently contains:
 
-## Category census
+- 65 rows
+- 65 distinct IDs
+- 65 distinct names
+- 0 duplicate IDs
+- 0 duplicate names
+- 0 live-only rows versus migration-confirmed source
+- 0 migration-confirmed source rows missing live
 
-| Category | Seed | Migration-confirmed |
+### Category parity
+
+| Category | Source confirmed | Live |
 |---|---:|---:|
 | Core Intelligence | 10 | 10 |
 | Vision & Media | 8 | 8 |
@@ -45,17 +59,15 @@ Those 23 records are **not considered identified** until an authoritative export
 | UX & Design | 5 | 5 |
 | Strategy & Governance | 5 | 5 |
 | Autonomous Control | 4 | 4 |
-| System Runtime | 5 | 6 |
+| System Runtime | 6 | 6 |
 | Optional High-Value | 8 | 8 |
-| **Total** | **64** | **65** |
+| **Total** | **65** | **65** |
+
+Therefore **live/source identity parity is exact at 65/65**.
 
 ## Runtime-binding truth
 
-The explicit adapter map binds exactly:
-
-`core-001` → `core-010`
-
-This is intentionally tracked separately from registry definitions.
+The explicit adapter map still binds exactly `core-001` → `core-010`.
 
 ```text
 DATABASE DEFINITION EXISTS
@@ -65,17 +77,19 @@ RUNTIME ADAPTER EXISTS
 RUNTIME EXECUTION IS HEALTHY
 ```
 
-R1 preserves that distinction rather than promoting all database rows as executable skills.
+R1 preserves this distinction. The remaining 55 database definitions are not automatically reclassified as executable merely because they exist in the registry.
 
-## Preliminary native reconciliation
+## Native reconciliation
 
-The current Git-backed native registry contains 17 canonical packages. Source-level reconciliation already finds:
+The current Git-backed native registry contains 17 canonical packages.
 
-- `core-001` / `LLM` — same stable ID and same capability name; preliminary exact match.
+Known relationships:
+
+- `core-001` / `LLM` — exact stable-ID/name match.
 - `ux-001` — **ID collision**: v7 `UI-Design` vs native `Screenshot to Blueprint`.
 - `ux-002` — **ID collision**: v7 `UX-Research` vs native `Frontend Fidelity Reconstruction`.
 
-The UX collisions must be resolved explicitly before parity/cutover. Neither side may silently overwrite the other.
+The two UX collisions are now the only R1 reconciliation blockers. Neither side may silently overwrite the other.
 
 Run:
 
@@ -83,56 +97,26 @@ Run:
 npm run census:v7
 ```
 
-for the source/native preview.
+The census now evaluates the committed authoritative live export against the current 65-skill live contract while retaining the historical 88 claim as source evidence.
 
-## Authoritative live export contract
-
-R1 next requires a read-only current export of `public.skills`. Accepted input to the reconciliation command is either:
-
-```json
-[
-  { "id": "core-001", "name": "LLM", "category_id": "core" }
-]
-```
-
-or:
-
-```json
-{
-  "skills": [
-    { "id": "core-001", "name": "LLM", "category_id": "core" }
-  ]
-}
-```
-
-Full DB rows are preferred because later parity stages must compare routing, policy, contracts, tool definitions, and timestamps as well as identity.
-
-Then run:
+For another read-only export:
 
 ```bash
 npm run reconcile:v7 -- path/to/live-v7-export.json
 ```
 
-The reconciliation reports:
+Reconciliation reports exact native matches, native ID collisions, source-only/native-only definitions, live-only/source-missing rows, duplicate IDs, current live-contract mismatch, and shadow-mode blockers. It performs zero native promotions.
 
-- exact native matches
-- native ID collisions
-- name matches under different IDs
-- source-only definitions
-- native-only definitions
-- live-only rows
-- migration-confirmed rows missing from live
-- duplicate live IDs
-- public 88-count contract mismatch
-- shadow-mode blockers
+## Live RLS/security verification
 
-It performs **zero native promotions**.
+Current deployed database policy state was verified directly during R1-B:
 
-## RLS/security source history
+- RLS is enabled on `public.skills`.
+- RLS is enabled on `public.categories`.
+- Public `SELECT` is allowed for both tables.
+- `INSERT`, `UPDATE`, and `DELETE` require an authenticated user satisfying `has_role(auth.uid(), 'admin'::app_role)`.
 
-The original April schema migration created public write/update/delete policies for `categories` and `skills`. A later May migration explicitly drops those write policies and replaces them with **authenticated admin-only** insert/update/delete policies while retaining public read access.
-
-So the committed migration history shows a source-level remediation. R1 still requires current live-policy verification during the authoritative DB pass because source migrations alone do not prove the deployed database's present RLS state.
+This confirms that the later source-level security remediation is active in the deployed database; the original broad public-write policies are not the current live policy state.
 
 ## R1 gates
 
@@ -142,32 +126,29 @@ So the committed migration history shows a source-level remediation. R1 still re
 - 10 categories enumerated
 - 65 migration-confirmed definitions enumerated
 - 10 explicit runtime bindings enumerated
-- public 88-skill contract recorded
-- unresolved delta explicitly recorded as 23
+- historical 88-skill static contract preserved as evidence
 - zero promotions
 
-### Gate R1-B — Live DB census ⛔ pending
+### Gate R1-B — Live DB census ✅
 
-Required:
+- authoritative `public.skills` export captured
+- authoritative category counts captured
+- 65 rows / 65 IDs / 65 names
+- duplicate ID/name check clear
+- live RLS/policy verification complete
+- former 23-record delta resolved as stale metadata, not database rows
+- current product contract corrected to 65
 
-- authoritative `public.skills` export
-- authoritative category counts
-- duplicate ID/name check
-- live RLS/policy verification
-- identify the 23 unresolved records or revise the public 88 claim
+### Gate R1-C — Identity/parity reconciliation ⏳ blocked only by native ID collisions
 
-### Gate R1-C — Identity/parity reconciliation ⏳ partial
-
-Already known:
-
-- one preliminary exact stable-ID/name match (`core-001`)
-- two native ID collisions (`ux-001`, `ux-002`)
-
-Complete only after live export.
+- live ↔ source: exact 65/65 identity parity
+- `core-001`: exact native stable-ID/name match
+- `ux-001`: unresolved native ID collision
+- `ux-002`: unresolved native ID collision
 
 ### Gate R1-D — Shadow mode ⛔ not started
 
-Blocked until R1-B and R1-C close.
+Blocked only until `ux-001` and `ux-002` collision policy is resolved and the resulting registry validates.
 
 ### Gate R1-E — `db → hybrid` ⛔ not started
 
@@ -176,9 +157,10 @@ No storage-authority change until shadow evidence passes.
 ## Invariants
 
 1. Census is not promotion.
-2. v7 IDs are preserved as evidence even when they collide.
-3. A database row is not assumed executable.
-4. The current native `skills/` tree remains canonical for existing native packages.
-5. Sophie-X/Skill Hub runtime behavior is unchanged during census.
-6. OpenClaw external inventory is not included in v7 parity authority; it remains a separate qualification source.
-7. No `db → hybrid` cutover occurs while the 23-record live delta or ID collisions remain unresolved.
+2. Historical evidence is preserved rather than rewritten to look retrospectively correct.
+3. v7 IDs remain evidence even when they collide with native IDs.
+4. A database row is not assumed executable.
+5. The current native `skills/` tree remains canonical for existing native packages.
+6. Skill Hub runtime behavior is unchanged by census work.
+7. OpenClaw external inventory remains outside v7 parity authority.
+8. No `db → hybrid` cutover occurs while native ID collisions remain unresolved.
