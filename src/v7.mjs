@@ -37,8 +37,8 @@ export function validateV7SourceCensus(census) {
   if (skills.length !== counts.migration_confirmed_definitions) errors.push('v7 migration-confirmed definition count mismatch');
   if (counts.initial_seed_definitions !== 64) errors.push('v7 initial seed definition count must remain 64');
   if (counts.migration_confirmed_definitions !== 65) errors.push('v7 migration-confirmed definition count must remain 65');
-  if (counts.claimed_live_registry !== 88) errors.push('v7 public live-registry claim changed; re-census required');
-  if (counts.unresolved_live_db_delta !== counts.claimed_live_registry - counts.migration_confirmed_definitions) errors.push('v7 unresolved live DB delta mismatch');
+  if (counts.claimed_live_registry !== 88) errors.push('v7 historical public claim changed; source re-census required');
+  if (counts.unresolved_live_db_delta !== counts.claimed_live_registry - counts.migration_confirmed_definitions) errors.push('v7 historical inferred delta mismatch');
   if (runtimeIds.length !== counts.runtime_bound_adapters) errors.push('v7 runtime-bound adapter count mismatch');
 
   const duplicateIds = duplicateValues(skills, 'id');
@@ -80,7 +80,7 @@ export function normalizeV7LiveExport(value) {
   });
 }
 
-export function reconcileV7({ census, nativeIndex, liveRows = null }) {
+export function reconcileV7({ census, nativeIndex, liveRows = null, liveContractCount = null }) {
   const errors = validateV7SourceCensus(census);
   if (errors.length) throw new Error(`Invalid v7 source census:\n- ${errors.join('\n- ')}`);
   if (!nativeIndex || !Array.isArray(nativeIndex.skills)) throw new Error('nativeIndex.skills is required');
@@ -128,31 +128,36 @@ export function reconcileV7({ census, nativeIndex, liveRows = null }) {
     .filter((skill) => !sourceById.has(skill.id))
     .map((skill) => ({ id: skill.id, name: skill.name, slug: skill.slug, category: skill.category }));
 
+  const currentContractCount = liveContractCount ?? census.counts.claimed_live_registry;
   const live = liveRows ? normalizeV7LiveExport(liveRows) : null;
-  const liveAnalysis = live ? analyzeLive(census, source, live) : {
+  const liveAnalysis = live ? analyzeLive(census, source, live, currentContractCount) : {
     status: 'required',
     count: null,
-    claimed_count: census.counts.claimed_live_registry,
+    historical_claimed_count: census.counts.claimed_live_registry,
+    claimed_count: currentContractCount,
     unresolved_delta: census.counts.unresolved_live_db_delta,
     live_only: [],
     source_missing_from_live: [],
     duplicate_ids: [],
-    count_matches_claim: null
+    count_matches_claim: null,
+    identity_matches_source: null
   };
 
   const blockingFindings = [];
-  if (!live) blockingFindings.push({ code: 'live_db_export_required', detail: `${census.counts.unresolved_live_db_delta} records remain unresolved against the public 88-skill claim.` });
+  if (!live) blockingFindings.push({ code: 'live_db_export_required', detail: `${census.counts.unresolved_live_db_delta} records were historically unresolved against the stale ${census.counts.claimed_live_registry}-skill product claim.` });
   if (nativeIdCollisions.length) blockingFindings.push({ code: 'native_id_collisions', detail: `${nativeIdCollisions.length} v7 IDs collide with different native definitions.`, ids: nativeIdCollisions.map((item) => item.id) });
   if (live && liveAnalysis.duplicate_ids.length) blockingFindings.push({ code: 'live_duplicate_ids', detail: 'Authoritative live export contains duplicate IDs.', ids: liveAnalysis.duplicate_ids });
-  if (live && !liveAnalysis.count_matches_claim) blockingFindings.push({ code: 'live_count_contract_mismatch', detail: `Live export count ${liveAnalysis.count} does not match public claim ${census.counts.claimed_live_registry}.` });
+  if (live && !liveAnalysis.count_matches_claim) blockingFindings.push({ code: 'live_count_contract_mismatch', detail: `Live export count ${liveAnalysis.count} does not match current authoritative claim ${currentContractCount}.` });
   if (live && liveAnalysis.source_missing_from_live.length) blockingFindings.push({ code: 'migration_rows_missing_live', detail: `${liveAnalysis.source_missing_from_live.length} migration-confirmed definitions are absent from the live export.` });
+  if (live && liveAnalysis.live_only.length) blockingFindings.push({ code: 'live_rows_missing_source', detail: `${liveAnalysis.live_only.length} live definitions are absent from the migration-confirmed source census.` });
 
   return {
     schema_version: '1.0',
     census_id: census.census_id,
     source_commit_sha: census.source.commit_sha,
     counts: {
-      claimed_live_registry: census.counts.claimed_live_registry,
+      historical_claimed_live_registry: census.counts.claimed_live_registry,
+      claimed_live_registry: currentContractCount,
       source_confirmed: source.length,
       runtime_bound: census.runtime_bound_ids.length,
       native: native.length,
@@ -178,17 +183,21 @@ export function reconcileV7({ census, nativeIndex, liveRows = null }) {
   };
 }
 
-function analyzeLive(census, source, live) {
+function analyzeLive(census, source, live, currentContractCount) {
   const sourceIds = new Set(source.map((skill) => skill.id));
   const liveIds = new Set(live.map((skill) => skill.id));
+  const liveOnly = live.filter((skill) => !sourceIds.has(skill.id)).map((skill) => ({ id: skill.id, name: skill.name, category_id: skill.category_id }));
+  const sourceMissingFromLive = source.filter((skill) => !liveIds.has(skill.id));
   return {
     status: 'provided',
     count: live.length,
-    claimed_count: census.counts.claimed_live_registry,
+    historical_claimed_count: census.counts.claimed_live_registry,
+    claimed_count: currentContractCount,
     unresolved_delta: Math.max(0, live.length - source.length),
-    live_only: live.filter((skill) => !sourceIds.has(skill.id)).map((skill) => ({ id: skill.id, name: skill.name, category_id: skill.category_id })),
-    source_missing_from_live: source.filter((skill) => !liveIds.has(skill.id)),
+    live_only: liveOnly,
+    source_missing_from_live: sourceMissingFromLive,
     duplicate_ids: duplicateValues(live, 'id'),
-    count_matches_claim: live.length === census.counts.claimed_live_registry
+    count_matches_claim: live.length === currentContractCount,
+    identity_matches_source: liveOnly.length === 0 && sourceMissingFromLive.length === 0 && live.length === source.length
   };
 }
