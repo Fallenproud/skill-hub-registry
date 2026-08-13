@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Skill Hub Registry — Git-backed, versioned skill packages for agents and runtimes." />
+  <title>Skill Hub Registry</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="hero panel">
+      <img src="assets/readme/skill-hub-registry-hero.webp" alt="Skill Hub Registry architecture hero" />
+      <div class="hero-copy">
+        <p class="eyebrow">CANONICAL SKILLS · PORTABLE COGNITION · RELIABLE EXECUTION</p>
+        <h1>Skill Hub Registry</h1>
+        <p>Git-backed skill packages with Markdown cognition, JSON contracts, deterministic indexes, provenance, and explicit runtime bindings.</p>
+      </div>
+    </section>
+
+    <section class="stats" id="stats">
+      <article class="panel"><strong id="nativeCount">—</strong><span>Native packages</span></article>
+      <article class="panel"><strong id="historyCount">35</strong><span>Historical candidates</span></article>
+      <article class="panel"><strong id="deltaCount">—</strong><span>Post-ledger delta</span></article>
+      <article class="panel"><strong>12</strong><span>Skill families</span></article>
+    </section>
+
+    <section class="panel pipeline"><img src="assets/onboarding/06-pipeline.webp" alt="Skill package pipeline" /></section>
+
+    <section class="grid-two">
+      <article class="panel"><img src="assets/onboarding/04-capability-cluster.webp" alt="Metadata capabilities and policies" /></article>
+      <article class="panel"><img src="assets/onboarding/05-execution-cluster.webp" alt="Dependencies implementation and tests" /></article>
+    </section>
+
+    <section class="panel registry-section">
+      <div>
+        <p class="eyebrow">COMPILED REGISTRY</p>
+        <h2>Discover only what you need. Hydrate the full skill on selection.</h2>
+        <p>The index stays lightweight; SKILL.md content is progressively disclosed when a runtime selects a skill.</p>
+      </div>
+      <div id="skillGrid" class="skill-grid"></div>
+    </section>
+  </main>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

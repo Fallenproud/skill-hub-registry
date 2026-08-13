@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "clusters": [
+    {
+      "cluster": "Brand System",
+      "members": ["SK-001", "SK-027"],
+      "decision": "Keep Brand Identity Packaging as canonical; preserve project asset packs as profiles/templates/specimens."
+    },
+    {
+      "cluster": "Frontend Reconstruction",
+      "members": ["SK-007", "SK-008", "SK-009", "SK-010", "SK-026", "SK-034", "DX-015", "DX-016"],
+      "decision": "Keep topology, extraction, implementation, authorized reconstruction, evaluation, and project-profile layers distinct; merge landing-page-only doctrine into broader skills."
+    },
+    {
+      "cluster": "Skill Foundry",
+      "members": ["SK-003", "SK-006", "SK-035", "DX-017", "DX-018"],
+      "decision": "Conditioning protocol governs; creator scaffolds; archaeologist discovers; compiler validates; parity auditor migrates."
+    },
+    {
+      "cluster": "Governance Gates",
+      "members": ["SK-002", "SK-022", "SK-030", "SK-031", "SK-032", "DX-002", "DX-022", "DX-023"],
+      "decision": "Reality Gate evaluates project readiness; policy/authority/approval/audit remain composable runtime controls."
+    },
+    {
+      "cluster": "Skill Runtime",
+      "members": ["SK-004", "SK-005", "SK-013", "SK-019", "SK-020", "SK-021", "SK-033", "DX-003", "DX-009"],
+      "decision": "Merge registry contracts and signed capability execution; keep orchestration, artifact execution, retry, replay, and runtime adapters modular."
+    },
+    {
+      "cluster": "Agent UI",
+      "members": ["SK-015", "SK-016", "DX-026"],
+      "decision": "Builder and evaluator pair; readiness verification is a reusable evaluator subskill."
+    },
+    {
+      "cluster": "Agent Engineering",
+      "members": ["SK-012", "SK-029", "DX-010", "DX-011", "DX-012", "DX-013", "DX-019"],
+      "decision": "Persona generation is an agent-packaging phase; memory/model/provisioning remain composable specialist skills."
+    },
+    {
+      "cluster": "Research Intelligence",
+      "members": ["SK-014", "DX-014", "DX-028"],
+      "decision": "Generic evidence-grounded research is canonical; Norway-specific intelligence is a domain profile; browser capture is an ingestion subskill."
+    },
+    {
+      "cluster": "Windows Diagnostics",
+      "members": ["SK-017", "SK-018"],
+      "decision": "Parent diagnostics skill with follow-up toolkit subskill."
+    },
+    {
+      "cluster": "Media Storytelling",
+      "members": ["SK-024", "SK-025", "DX-020"],
+      "decision": "Campaign pipeline calls narrative specialist and asset-production subskill."
+    },
+    {
+      "cluster": "Recovery Engineering",
+      "members": ["DX-004", "DX-005", "DX-006", "DX-027"],
+      "decision": "Keep legacy donor extraction, monorepo reconstruction, pinned-upstream adoption, and source-bound reconstruction distinct but composable."
+    }
+  ]
+}

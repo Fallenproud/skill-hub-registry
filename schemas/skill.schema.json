@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skillhub.registry/schemas/skill.schema.json",
+  "title": "Skill Hub Skill Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","id","slug","name","version","category","description","status","priority","routing","execution","contracts","policy","compatibility"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "slug": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$" },
+    "category": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["draft","defined","validated","registered","executable","deprecated","quarantined"] },
+    "maturity": { "enum": ["L0","L1","L2","L3","L4","L5"] },
+    "capability_type": { "type": "string", "minLength": 1 },
+    "priority": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "routing": {"type":"object","additionalProperties":false,"required":["trigger","boundary","invoke_conditions","block_conditions","fallback_chain","tags"],"properties":{"trigger":{"type":"string"},"boundary":{"type":"string"},"invoke_conditions":{"type":"array","items":{"type":"string"}},"block_conditions":{"type":"array","items":{"type":"string"}},"fallback_chain":{"type":"array","items":{"type":"string"}},"tags":{"type":"array","items":{"type":"string"}}}},
+    "execution": {"type":"object","additionalProperties":false,"required":["kind","binding"],"properties":{"kind":{"enum":["adapter","instructional","none"]},"binding":{"type":["string","null"]}}},
+    "contracts": {"type":"object","additionalProperties":false,"required":["inputs","outputs"],"properties":{"inputs":{"type":"array","items":{"type":"string"}},"outputs":{"type":"array","items":{"type":"string"}}}},
+    "policy": {"type":"object","additionalProperties":false,"required":["cost_class","latency_class","requires_auth","requires_freshness","safe_for_parallel","stateful","logs_required"],"properties":{"cost_class":{"enum":["low","medium","high"]},"latency_class":{"enum":["fast","normal","slow"]},"requires_auth":{"type":"boolean"},"requires_freshness":{"type":"boolean"},"safe_for_parallel":{"type":"boolean"},"stateful":{"type":"boolean"},"logs_required":{"type":"boolean"}}},
+    "compatibility": {"type":"object","additionalProperties":false,"required":["skill_hub","sophie_x","openclaw"],"properties":{"skill_hub":{"type":"string"},"sophie_x":{"type":"string"},"openclaw":{"type":"string"}}},
+    "provenance": {"type":"object","additionalProperties":false,"properties":{"source_class":{"type":"string"},"source_refs":{"type":"array","items":{"type":"string"}},"project_scope":{"enum":["domain-neutral","domain-profile","project-specific"]}}},
+    "dependencies": {"type":"object","additionalProperties":false,"properties":{"skills":{"type":"array","items":{"type":"string"}},"tools":{"type":"array","items":{"type":"string"}},"external":{"type":"array","items":{"type":"string"}}}}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "sources": [
+    {"id":"SRC-001","title":"Brand Identity Packaging SKILL.md","verification":"verified","linked":["SK-001"]},
+    {"id":"SRC-002","title":"Production Reality Gate Master","verification":"verified","linked":["SK-002"]},
+    {"id":"SRC-003","title":"Sophie Conditioning Protocol v1.0","verification":"verified","linked":["SK-003","SK-031"]},
+    {"id":"SRC-004","title":"Skill Hub v7 audit/archive context","verification":"context-verified","linked":["SK-004"]},
+    {"id":"SRC-005","title":"Norway Market Intel Agent Whitepaper Pack","verification":"verified","linked":["SK-014"]},
+    {"id":"SRC-006","title":"Agent-Ready Chat UI Whitepaper","verification":"verified","linked":["SK-015","SK-016"]},
+    {"id":"SRC-007","title":"Norway Deployment Prompt Runbook","verification":"verified","linked":["SK-014","SK-033"]},
+    {"id":"SRC-008","title":"Agent OS 2.0 Production White Paper","verification":"verified","linked":["SK-019"]},
+    {"id":"SRC-009","title":"AgentOS Implementation Worklog","verification":"verified","linked":["SK-020","SK-032"]},
+    {"id":"SRC-010","title":"SophiePort README","verification":"verified","linked":["SK-021"]},
+    {"id":"SRC-011","title":"Agent Authority Plane architecture","verification":"verified","linked":["SK-022"]},
+    {"id":"SRC-012","title":"AIKO Client Onboarding specification","verification":"verified","linked":["SK-023"]},
+    {"id":"SRC-013","title":"Website reconstruction master skill","verification":"verified-with-governance-issues","linked":["SK-010"]},
+    {"id":"SRC-014","title":"Sophie-X Visual Brand Assets Bundle","verification":"verified","linked":["SK-027"]},
+    {"id":"SRC-015","title":"Sophie-X workspace rebuild prompts","verification":"verified","linked":["SK-034"]},
+    {"id":"SRC-016","title":"Prior portfolio and skill taxonomy context","verification":"context-verified","linked":["multiple"]},
+    {"id":"SRC-017","title":"Post-July 2026 audit/runtime/design/deployment work inventory","verification":"conversation-and-repo-archaeology","linked":["DX-001..DX-028"]}
+  ]
+}
