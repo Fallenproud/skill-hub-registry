@@ -128,9 +128,11 @@ The reconciliation reports:
 
 It performs **zero native promotions**.
 
-## Source-level security observation
+## RLS/security source history
 
-The original schema migration enabled public read/write/update/delete RLS policies for `categories` and `skills`. R1 does not assume those policies remain effective in the current production database; current live policies must be verified during the authoritative DB pass. If still present, this is a release-blocking registry-integrity issue and must be corrected before shadow/cutover.
+The original April schema migration created public write/update/delete policies for `categories` and `skills`. A later May migration explicitly drops those write policies and replaces them with **authenticated admin-only** insert/update/delete policies while retaining public read access.
+
+So the committed migration history shows a source-level remediation. R1 still requires current live-policy verification during the authoritative DB pass because source migrations alone do not prove the deployed database's present RLS state.
 
 ## R1 gates
 
