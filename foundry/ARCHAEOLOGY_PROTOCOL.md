@@ -10,3 +10,7 @@
 8. Add tests/evidence before raising maturity.
 9. Never discard useful source material merely because it is not yet canonical.
 10. Never claim a source-derived capability executes until a verified runtime binding exists.
+
+## External ecosystem inventories
+
+External catalogs are preserved as qualification inputs rather than native skills. Import source identity first, keep original review status and risk notes, and require static/sandbox/compatibility evidence before any `ADOPT`, `ADAPTER`, or native promotion decision. Marketplace or repository presence alone is not maturity evidence.

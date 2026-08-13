@@ -1,11 +1,13 @@
 # Roadmap
 
-## R0 — Registry foundation
+## R0 — Registry foundation ✅
 - canonical package schema
 - deterministic compiler/index
 - provenance and candidate inventories
 - CI validation
 - onboarding/Pages surface
+- external OpenClaw inventory import with deterministic normalization
+- external/native isolation tests
 
 ## R1 — v7 census and parity
 - export live Skill Hub registry
@@ -13,6 +15,14 @@
 - parity report
 - `db | hybrid | files` resolver
 - shadow comparisons
+
+## R1.1 — External ecosystem qualification
+- verify current upstream repository/version/license metadata for selected OpenClaw P0/P1 records
+- static security/dependency qualification
+- sandbox compatibility matrix
+- evidence capture
+- explicit `ADOPT | ADAPTER | REFERENCE | DEFER | REJECT` decisions
+- promote individual reusable skills only through the normal Foundry gates
 
 ## R2 — Foundry
 - archaeology automation

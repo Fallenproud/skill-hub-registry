@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
       - name: Validate and build registry site
-        run: npm run site:build
+        run: npm run check && npm run site:build
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

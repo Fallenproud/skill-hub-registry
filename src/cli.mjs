@@ -25,7 +25,7 @@ if (command === 'validate') {
     for (const error of inventory.errors) console.error(`- ${error}`);
     process.exit(1);
   }
-  console.log(`Registry valid: ${skills.length} native package(s); ${inventory.history.count} historical candidates; ${inventory.delta.count} post-July candidates.`);
+  console.log(`Registry valid: ${skills.length} native package(s); ${inventory.history.count} historical candidates; ${inventory.delta.count} post-July candidates; ${inventory.external.openclaw.catalog.count} external OpenClaw projects.`);
 } else if (command === 'build') {
   const skills = await registryOrExit();
   const index = compileIndex(skills);

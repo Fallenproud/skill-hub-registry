@@ -1,0 +1,218 @@
+{
+  "schema_version": "1.0",
+  "inventory_id": "external-openclaw-ecosystem",
+  "ecosystem": "OpenClaw",
+  "count": 65,
+  "architecture_policy": "external-reference-only",
+  "native_promotion_count": 0,
+  "source_hashes": {
+    "catalog_sha256": "9dd8245275351bbc33a0095f33b03904e2fb0a64e876a286842c821254760b7e",
+    "schema_sha256": "128c53e684471bdec8ba2946be82133a1d0b724a49884752d91d567123ccd221"
+  },
+  "counts": {
+    "category": {
+      "Agent Infrastructure & SDKs": 10,
+      "Agents & Services": 7,
+      "Everything else": 21,
+      "Local-First Crawlers": 11,
+      "Native Tools": 9,
+      "TypeScript Libraries": 7
+    },
+    "priority_tier": {
+      "P0 — immediate evaluation": 14,
+      "P1 — high-value prototype": 15,
+      "P2 — selective/reference": 19,
+      "P3 — low priority/current mismatch": 17
+    },
+    "local_first": {
+      "No": 4,
+      "Partial": 14,
+      "Yes": 47
+    },
+    "security_review_required": {
+      "Mandatory": 4,
+      "Yes": 61
+    },
+    "review_status": {
+      "Tentative — user review required": 65
+    }
+  },
+  "immediate_evaluation": [
+    {
+      "ecosystem_id": "OC-002",
+      "project": "Crabbox",
+      "repo_url": "https://github.com/openclaw/crabbox",
+      "strategic_value_score": 96
+    },
+    {
+      "ecosystem_id": "OC-004",
+      "project": "Crabfleet",
+      "repo_url": "https://github.com/openclaw/crabfleet",
+      "strategic_value_score": 95
+    },
+    {
+      "ecosystem_id": "OC-007",
+      "project": "Lobster",
+      "repo_url": "https://github.com/openclaw/lobster",
+      "strategic_value_score": 95
+    },
+    {
+      "ecosystem_id": "OC-009",
+      "project": "gitcrawl",
+      "repo_url": "https://github.com/openclaw/gitcrawl",
+      "strategic_value_score": 93
+    },
+    {
+      "ecosystem_id": "OC-017",
+      "project": "crawlkit",
+      "repo_url": "https://github.com/openclaw/crawlkit",
+      "strategic_value_score": 92
+    },
+    {
+      "ecosystem_id": "OC-019",
+      "project": "acpx",
+      "repo_url": "https://github.com/openclaw/acpx",
+      "strategic_value_score": 91
+    },
+    {
+      "ecosystem_id": "OC-020",
+      "project": "mcporter",
+      "repo_url": "https://github.com/openclaw/mcporter",
+      "strategic_value_score": 94
+    },
+    {
+      "ecosystem_id": "OC-023",
+      "project": "clawbench",
+      "repo_url": "https://github.com/openclaw/clawbench",
+      "strategic_value_score": 90
+    },
+    {
+      "ecosystem_id": "OC-024",
+      "project": "ClawScan",
+      "repo_url": "https://github.com/openclaw/clawscan",
+      "strategic_value_score": 97
+    },
+    {
+      "ecosystem_id": "OC-026",
+      "project": "agent-skills",
+      "repo_url": "https://github.com/openclaw/agent-skills",
+      "strategic_value_score": 90
+    },
+    {
+      "ecosystem_id": "OC-030",
+      "project": "fs-safe",
+      "repo_url": "https://github.com/openclaw/fs-safe",
+      "strategic_value_score": 94
+    },
+    {
+      "ecosystem_id": "OC-051",
+      "project": "Kova",
+      "repo_url": "https://github.com/openclaw/kova",
+      "strategic_value_score": 91
+    },
+    {
+      "ecosystem_id": "OC-056",
+      "project": "openclaw-windows-node",
+      "repo_url": "https://github.com/openclaw/openclaw-windows-node",
+      "strategic_value_score": 92
+    },
+    {
+      "ecosystem_id": "OC-064",
+      "project": "releases",
+      "repo_url": "https://github.com/openclaw/releases",
+      "strategic_value_score": 98
+    }
+  ],
+  "high_value_prototype": [
+    {
+      "ecosystem_id": "OC-005",
+      "project": "ClawHub",
+      "repo_url": "https://github.com/openclaw/clawhub",
+      "strategic_value_score": 89
+    },
+    {
+      "ecosystem_id": "OC-014",
+      "project": "notcrawl",
+      "repo_url": "https://github.com/openclaw/notcrawl",
+      "strategic_value_score": 81
+    },
+    {
+      "ecosystem_id": "OC-022",
+      "project": "clawpatch",
+      "repo_url": "https://github.com/openclaw/clawpatch",
+      "strategic_value_score": 86
+    },
+    {
+      "ecosystem_id": "OC-025",
+      "project": "crabline",
+      "repo_url": "https://github.com/openclaw/crabline",
+      "strategic_value_score": 87
+    },
+    {
+      "ecosystem_id": "OC-027",
+      "project": "plugin-inspector",
+      "repo_url": "https://github.com/openclaw/plugin-inspector",
+      "strategic_value_score": 88
+    },
+    {
+      "ecosystem_id": "OC-033",
+      "project": "ffmpeg-wasm",
+      "repo_url": "https://github.com/openclaw/ffmpeg-wasm",
+      "strategic_value_score": 84
+    },
+    {
+      "ecosystem_id": "OC-034",
+      "project": "libterminal",
+      "repo_url": "https://github.com/openclaw/libterminal",
+      "strategic_value_score": 84
+    },
+    {
+      "ecosystem_id": "OC-035",
+      "project": "clawpdf",
+      "repo_url": "https://github.com/openclaw/clawpdf",
+      "strategic_value_score": 85
+    },
+    {
+      "ecosystem_id": "OC-041",
+      "project": "gogcli",
+      "repo_url": "https://github.com/openclaw/gogcli",
+      "strategic_value_score": 80
+    },
+    {
+      "ecosystem_id": "OC-047",
+      "project": "openclaw-ansible",
+      "repo_url": "https://github.com/openclaw/openclaw-ansible",
+      "strategic_value_score": 80
+    },
+    {
+      "ecosystem_id": "OC-053",
+      "project": "caclawphony",
+      "repo_url": "https://github.com/openclaw/caclawphony",
+      "strategic_value_score": 83
+    },
+    {
+      "ecosystem_id": "OC-054",
+      "project": "clownfish",
+      "repo_url": "https://github.com/openclaw/clownfish",
+      "strategic_value_score": 82
+    },
+    {
+      "ecosystem_id": "OC-058",
+      "project": "crabpot",
+      "repo_url": "https://github.com/openclaw/crabpot",
+      "strategic_value_score": 89
+    },
+    {
+      "ecosystem_id": "OC-059",
+      "project": "kitchen-sink",
+      "repo_url": "https://github.com/openclaw/kitchen-sink",
+      "strategic_value_score": 87
+    },
+    {
+      "ecosystem_id": "OC-063",
+      "project": "rfcs",
+      "repo_url": "https://github.com/openclaw/rfcs",
+      "strategic_value_score": 86
+    }
+  ]
+}

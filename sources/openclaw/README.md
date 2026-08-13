@@ -13,4 +13,4 @@ Schema SHA-256:
 
 `128c53e684471bdec8ba2946be82133a1d0b724a49884752d91d567123ccd221`
 
-The gzip wrapper is repository transport only. `npm run import:openclaw` decompresses the catalog and deterministically rebuilds the normalized external inventory shards.
+The gzip wrapper is repository transport only. `npm run import:openclaw` decompresses the catalog and deterministically rebuilds the normalized external discovery index, schema, and summary.

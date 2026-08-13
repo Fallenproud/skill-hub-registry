@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0",
+  "inventory_id": "external-openclaw-ecosystem",
+  "source_type": "external-ecosystem-schema",
+  "fields": [
+    {
+      "column_name": "ecosystem_id",
+      "definition": "Stable internal row identifier",
+      "data_type": "string",
+      "example": "OC-001",
+      "required": "Required",
+      "validation_notes": "Do not reuse IDs when rows are removed."
+    },
+    {
+      "column_name": "category",
+      "definition": "OpenClaw ecosystem grouping",
+      "data_type": "enum/string",
+      "example": "Agent Infrastructure & SDKs",
+      "required": "Required",
+      "validation_notes": "Preserve the supplied category unless formally reclassified."
+    },
+    {
+      "column_name": "project",
+      "definition": "Display name of the project",
+      "data_type": "string",
+      "example": "ClawScan",
+      "required": "Required",
+      "validation_notes": "Case-preserving canonical name."
+    },
+    {
+      "column_name": "repo_slug",
+      "definition": "Repository path segment",
+      "data_type": "string",
+      "example": "clawscan",
+      "required": "Required",
+      "validation_notes": "Verify against the official organization before automated cloning."
+    },
+    {
+      "column_name": "repo_url",
+      "definition": "Canonical source repository URL",
+      "data_type": "URL",
+      "example": "https://github.com/openclaw/clawscan",
+      "required": "Required",
+      "validation_notes": "Use plain-text URL for portability."
+    },
+    {
+      "column_name": "provided_description",
+      "definition": "Concise capability description",
+      "data_type": "string",
+      "example": "Composable security scanning harness for agent skills.",
+      "required": "Required",
+      "validation_notes": "Source summary, not a substitute for repository audit."
+    },
+    {
+      "column_name": "capability_layer",
+      "definition": "Architectural function served",
+      "data_type": "enum/string",
+      "example": "Agent security",
+      "required": "Required",
+      "validation_notes": "Examples: orchestration, ingestion, validation, media, distribution."
+    },
+    {
+      "column_name": "execution_mode",
+      "definition": "How it is delivered or run",
+      "data_type": "enum/string",
+      "example": "CLI / SDK",
+      "required": "Required",
+      "validation_notes": "Examples: hosted service, native CLI, library, fixture, docs."
+    },
+    {
+      "column_name": "primary_language",
+      "definition": "Primary implementation language",
+      "data_type": "string",
+      "example": "Go",
+      "required": "Optional",
+      "validation_notes": "Use Unknown when not verified."
+    },
+    {
+      "column_name": "local_first",
+      "definition": "Whether data/execution primarily remains local",
+      "data_type": "enum",
+      "example": "Yes",
+      "required": "Required",
+      "validation_notes": "Allowed: Yes, No, Partial."
+    },
+    {
+      "column_name": "platform_fit",
+      "definition": "Operating-system or deployment compatibility",
+      "data_type": "string",
+      "example": "Windows",
+      "required": "Required",
+      "validation_notes": "Explicitly note macOS-only and server-only projects."
+    },
+    {
+      "column_name": "primary_fit",
+      "definition": "Best-fit destination in the user's ecosystem",
+      "data_type": "string",
+      "example": "Daycostra + AIKOV",
+      "required": "Required",
+      "validation_notes": "Does not authorize merging product boundaries."
+    },
+    {
+      "column_name": "strategic_value_score",
+      "definition": "Relative value to current user priorities",
+      "data_type": "integer 0-100",
+      "example": "97",
+      "required": "Required",
+      "validation_notes": "Contextual score, not an objective project-quality score."
+    },
+    {
+      "column_name": "priority_tier",
+      "definition": "Evaluation priority derived from score",
+      "data_type": "enum",
+      "example": "P0 — immediate evaluation",
+      "required": "Required",
+      "validation_notes": "P0 >=90; P1 80-89; P2 65-79; P3 <65."
+    },
+    {
+      "column_name": "recommended_action",
+      "definition": "Next treatment for the project",
+      "data_type": "enum/string",
+      "example": "Prototype adapter immediately",
+      "required": "Required",
+      "validation_notes": "Prefer adapter/reference over direct core coupling."
+    },
+    {
+      "column_name": "why_valuable_to_us",
+      "definition": "Specific strategic value explanation",
+      "data_type": "string",
+      "example": "Adds pre-install skill security evidence.",
+      "required": "Required",
+      "validation_notes": "Tie to actual AIKO/AIKOV/Sophie-X/Daycostra needs."
+    },
+    {
+      "column_name": "integration_pattern",
+      "definition": "Safe proposed integration boundary",
+      "data_type": "string",
+      "example": "Pre-install validation stage",
+      "required": "Required",
+      "validation_notes": "State adapter, contract, event, or evidence boundary."
+    },
+    {
+      "column_name": "main_risk_or_overlap",
+      "definition": "Largest adoption risk or duplicated capability",
+      "data_type": "string",
+      "example": "Supply-chain and prompt-injection risk",
+      "required": "Required",
+      "validation_notes": "Include platform mismatch and authority risks."
+    },
+    {
+      "column_name": "security_review_required",
+      "definition": "Whether formal security review is needed",
+      "data_type": "enum",
+      "example": "Mandatory",
+      "required": "Required",
+      "validation_notes": "Allowed: Yes, No, Mandatory."
+    },
+    {
+      "column_name": "source_basis",
+      "definition": "Where the row description and link came from",
+      "data_type": "string",
+      "example": "User snapshot + official org naming",
+      "required": "Required",
+      "validation_notes": "Add audited source URLs in later review passes."
+    },
+    {
+      "column_name": "review_status",
+      "definition": "Human review lifecycle state",
+      "data_type": "enum/string",
+      "example": "Tentative — user review required",
+      "required": "Required",
+      "validation_notes": "Do not promote to Approved without user review."
+    }
+  ]
+}

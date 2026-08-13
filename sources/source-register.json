@@ -17,6 +17,8 @@
     {"id":"SRC-014","title":"Sophie-X Visual Brand Assets Bundle","verification":"verified","linked":["SK-027"]},
     {"id":"SRC-015","title":"Sophie-X workspace rebuild prompts","verification":"verified","linked":["SK-034"]},
     {"id":"SRC-016","title":"Prior portfolio and skill taxonomy context","verification":"context-verified","linked":["multiple"]},
-    {"id":"SRC-017","title":"Post-July 2026 audit/runtime/design/deployment work inventory","verification":"conversation-and-repo-archaeology","linked":["DX-001..DX-028"]}
+    {"id":"SRC-017","title":"Post-July 2026 audit/runtime/design/deployment work inventory","verification":"conversation-and-repo-archaeology","linked":["DX-001..DX-028"]},
+    {"id":"SRC-018","title":"OpenClaw ecosystem catalog — 65 projects","verification":"preserved-prior-user-supplied-inventory","linked":["inventory/external/openclaw/index/*.json","docs/OPENCLAW_IMPORT.md"]},
+    {"id":"SRC-019","title":"OpenClaw ecosystem catalog schema — 21 fields","verification":"preserved-prior-user-supplied-inventory","linked":["inventory/external/openclaw/schema.json","scripts/import-openclaw.mjs"]}
   ]
 }
