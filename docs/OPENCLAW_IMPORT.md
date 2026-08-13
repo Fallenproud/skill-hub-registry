@@ -6,8 +6,8 @@ The repository imports the previously curated OpenClaw ecosystem inventory as an
 
 Source material:
 
-- `sources/openclaw/openclaw_ecosystem_catalog.csv.gz` (exact catalog, gzip-compressed)
-- `sources/openclaw/openclaw_ecosystem_schema.csv`
+- Original catalog SHA-256: `9dd8245275351bbc33a0095f33b03904e2fb0a64e876a286842c821254760b7e`
+- `sources/openclaw/openclaw_ecosystem_schema.csv` (exact 21-field schema)
 
 Normalized output:
 
@@ -21,7 +21,7 @@ Repeatable import:
 npm run import:openclaw
 ```
 
-The importer parses the original CSV, validates IDs/repository boundaries/scoring fields/schema coverage, records source hashes, and deterministically regenerates the normalized JSON files.
+The importer validates the committed external projection, repository boundaries, scores/tiers, schema coverage, review state, source hashes, and zero-native-promotion invariant, then deterministically normalizes the JSON index/summary.
 
 ## Imported inventory
 

@@ -1,34 +1,30 @@
 #!/usr/bin/env node
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { importOpenClawSource, shardOpenClawIndex, validateOpenClawInventory } from '../src/openclaw.mjs';
+import { csvToObjects } from '../src/csv.mjs';
+import { buildOpenClawSummary, combineOpenClawIndexShards, normalizeOpenClawSchema, shardOpenClawIndex, validateOpenClawInventory } from '../src/openclaw.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const sourceDir = path.join(root, 'sources', 'openclaw');
 const outputDir = path.join(root, 'inventory', 'external', 'openclaw');
 const indexDir = path.join(outputDir, 'index');
-
-const catalogCsv = gunzipSync(await fs.readFile(path.join(sourceDir, 'openclaw_ecosystem_catalog.csv.gz'))).toString('utf8');
-const schemaCsv = await fs.readFile(path.join(sourceDir, 'openclaw_ecosystem_schema.csv'), 'utf8');
-const imported = importOpenClawSource(catalogCsv, schemaCsv);
-const errors = validateOpenClawInventory(imported);
-
+async function readJsonDirectory(dir) {
+  const entries = (await fs.readdir(dir, { withFileTypes: true })).filter((e) => e.isFile() && e.name.endsWith('.json')).sort((a,b) => a.name.localeCompare(b.name));
+  return Object.fromEntries(await Promise.all(entries.map(async (e) => [e.name, JSON.parse(await fs.readFile(path.join(dir, e.name), 'utf8'))])));
+}
+const index = combineOpenClawIndexShards(await readJsonDirectory(indexDir));
+const schema = normalizeOpenClawSchema(csvToObjects(await fs.readFile(path.join(root, 'sources', 'openclaw', 'openclaw_ecosystem_schema.csv'), 'utf8')));
+const summary = buildOpenClawSummary(index);
+const errors = validateOpenClawInventory({ index, schema, summary });
 if (errors.length) {
   console.error(`OpenClaw import invalid (${errors.length} error${errors.length === 1 ? '' : 's'}):`);
   for (const error of errors) console.error(`- ${error}`);
   process.exit(1);
 }
-
-await fs.mkdir(outputDir, { recursive: true });
+const canonical = shardOpenClawIndex(index);
 await fs.rm(indexDir, { recursive: true, force: true });
 await fs.mkdir(indexDir, { recursive: true });
-const shards = shardOpenClawIndex(imported.index);
-for (const [file, shard] of Object.entries(shards)) {
-  await fs.writeFile(path.join(indexDir, file), JSON.stringify(shard, null, 2) + '\n');
-}
-await fs.writeFile(path.join(outputDir, 'schema.json'), JSON.stringify(imported.schema, null, 2) + '\n');
-await fs.writeFile(path.join(outputDir, 'summary.json'), JSON.stringify(imported.summary, null, 2) + '\n');
-
-console.log(`Imported ${imported.catalog.count} OpenClaw ecosystem project(s) into ${Object.keys(shards).length} external discovery index part(s).`);
+for (const [file, shard] of Object.entries(canonical)) await fs.writeFile(path.join(indexDir, file), JSON.stringify(shard, null, 2) + '\n');
+await fs.writeFile(path.join(outputDir, 'schema.json'), JSON.stringify(schema, null, 2) + '\n');
+await fs.writeFile(path.join(outputDir, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
+console.log(`Verified and normalized ${index.count} external OpenClaw ecosystem project(s); native promotions: 0.`);

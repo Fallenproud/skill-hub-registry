@@ -72,9 +72,9 @@ The index is content-addressed; identical native skill content produces identica
 The prior OpenClaw ecosystem catalog is now preserved and normalized without changing the canonical architecture.
 
 ```text
-sources/openclaw/openclaw_ecosystem_catalog.csv.gz
+catalog SHA-256: 9dd8245275351bbc33a0095f33b03904e2fb0a64e876a286842c821254760b7e
 sources/openclaw/openclaw_ecosystem_schema.csv
-        ↓ deterministic import
+        ↓ validated external projection
 inventory/external/openclaw/index/part-01.json … part-13.json
 inventory/external/openclaw/schema.json
 inventory/external/openclaw/summary.json
