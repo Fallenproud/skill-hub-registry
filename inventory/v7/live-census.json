@@ -20,7 +20,10 @@
     "live_only_vs_source": 0,
     "source_missing_from_live": 0,
     "duplicate_ids": 0,
-    "duplicate_names": 0
+    "duplicate_names": 0,
+    "shadow_definition_fields": 20,
+    "shadow_field_mismatches": 0,
+    "native_id_collisions": 0
   },
   "category_counts": [
     {"id":"core","count":10},
@@ -48,20 +51,43 @@
     "historical_claim_status": "stale-static-product-metadata",
     "correction_lovable_commit": "f944372350d228e1d230ca1b2ebdfc79f3dd1c40"
   },
+  "identity_resolution": {
+    "deployed_ids_preserved": [
+      {"id":"ux-001","name":"UI-Design"},
+      {"id":"ux-002","name":"UX-Research"}
+    ],
+    "native_rekeys": [
+      {"old_id":"ux-001","new_id":"ux-007","name":"Screenshot to Blueprint"},
+      {"old_id":"ux-002","new_id":"ux-008","name":"Frontend Fidelity Reconstruction"}
+    ]
+  },
+  "shadow": {
+    "serving_authority": "db",
+    "source": "inventory/v7/live-export.json",
+    "db_count": 65,
+    "file_count": 65,
+    "definition_fields_compared": 20,
+    "field_mismatches": 0,
+    "identity_mismatches": 0,
+    "evidence": "inventory/v7/shadow-evidence.json",
+    "verification_run_id": 31691945930
+  },
   "status": {
     "live_db_census": "complete",
     "source_live_identity_parity": "exact",
+    "native_identity_collisions": "resolved",
+    "shadow_mode": "active",
+    "shadow_definition_parity": "exact-first-pass",
     "native_promotion": 0,
-    "shadow_mode": "blocked-by-native-id-collisions",
     "hybrid_cutover": "not-started"
   },
-  "remaining_blockers": [
-    {"code":"native_id_collision","id":"ux-001","v7_name":"UI-Design","native_name":"Screenshot to Blueprint"},
-    {"code":"native_id_collision","id":"ux-002","v7_name":"UX-Research","native_name":"Frontend Fidelity Reconstruction"}
-  ],
+  "remaining_blockers": [],
+  "next_gate": "Repeated clean shadow evidence through the confidence window before any db-to-hybrid cutover decision.",
   "notes": [
     "The previously inferred 23-record delta did not exist in the live database.",
     "The live public.skills identity set exactly matches the 65 migration-confirmed source definitions.",
-    "The historical 88 count is retained only as source-census evidence and has been corrected in current Skill Hub static product copy."
+    "The authoritative live export now preserves all 20 definition fields used by the shadow comparator.",
+    "The former ux-001 and ux-002 native collisions were resolved by preserving deployed IDs and rekeying the provisional native packages to ux-007 and ux-008.",
+    "R1-D keeps Supabase DB primary; shadow comparison is observational only and cannot affect Sophie-X routing or execution."
   ]
 }
