@@ -1,166 +1,135 @@
 # R1 — Skill Hub v7 Census & Parity
 
-Status: **source census complete; live DB census complete; identity parity blocked only by two native ID collisions**.
+Status: **R1-A/B/C complete; R1-D shadow mode active with a first full-definition parity pass. DB remains primary.**
 
-R1 inventories the legacy/deployed Skill Hub v7 before any storage-authority cutover. Census records are evidence only. They are not native promotions.
+R1 migrates the deployed Skill Hub definition layer without downtime or accidental authority changes. Census and shadow artifacts are evidence; they do not promote skills or change runtime serving authority.
 
-## Source pinned
+## Source and live authority
 
-| Field | Value |
+| Surface | Value |
 |---|---|
-| Repository | `Fallenproud/skill-hub-builder` |
-| Branch | `main` |
-| Historical source census commit | `aba0a27320a1b8e124f85c2b018d186600f3b203` |
-| Static-count correction commit | `f944372350d228e1d230ca1b2ebdfc79f3dd1c40` |
+| Skill Hub repository | `Fallenproud/skill-hub-builder` |
 | Deployed surface | `https://my-agenthub.lovable.app` |
-| Operational store | Supabase |
-
-Machine-readable evidence:
-
-- `inventory/v7/source-census.json`
-- `inventory/v7/live-export.json`
-- `inventory/v7/live-census.json`
+| Operational store | Supabase `public.skills` |
+| Historical source census | `inventory/v7/source-census.json` |
+| Authoritative live definition export | `inventory/v7/live-export.json` |
+| Live census/control evidence | `inventory/v7/live-census.json` |
+| First R1-D shadow evidence | `inventory/v7/shadow-evidence.json` |
 
 ## Reconciled count truth
 
-The historical source snapshot and the authoritative live database expose distinct truths that must remain separate:
+| Truth | Count |
+|---|---:|
+| Historical static product claim | **88** |
+| Authoritative live registry | **65** |
+| Migration-confirmed definitions | **65** |
+| Explicit runtime adapters | **10** |
+| Native file-backed packages | **17** |
 
-| Truth | Count | Evidence meaning |
-|---|---:|---|
-| Historical static product claim | **88** | Pre-census UI/SEO/metadata claimed 88 skills |
-| Authoritative current live registry | **65** | Current `public.skills` row count |
-| Initial migration seed | **64** | Original migration inserts 64 definitions |
-| Migration-confirmed definitions | **65** | Later migration adds `sys-006` |
-| Explicit runtime adapters | **10** | `core-001` through `core-010` have explicit adapter bindings |
+The former inferred `88 - 65 = 23` delta is closed. The live database contains exactly 65 skills; the 88 value was stale static product metadata and has been corrected in current Skill Hub copy.
 
-The earlier inferred `88 - 65 = 23` unresolved delta is now closed: **those 23 records do not exist in the live database**. The 88 value was stale static product metadata. Current Skill Hub static product copy has been corrected to 65 while database-derived counters remain dynamic.
+## Live database census
 
-## Authoritative live DB census
-
-`public.skills` currently contains:
+Current `public.skills` truth:
 
 - 65 rows
 - 65 distinct IDs
 - 65 distinct names
-- 0 duplicate IDs
-- 0 duplicate names
-- 0 live-only rows versus migration-confirmed source
-- 0 migration-confirmed source rows missing live
+- 10 categories
+- 0 duplicate IDs or names
+- 0 live-only rows versus source
+- 0 source-confirmed rows missing live
 
-### Category parity
+Live/source identity parity is therefore **65/65 exact**.
 
-| Category | Source confirmed | Live |
-|---|---:|---:|
-| Core Intelligence | 10 | 10 |
-| Vision & Media | 8 | 8 |
-| Audio & Speech | 4 | 4 |
-| Web & Data | 7 | 7 |
-| Code & Engineering | 8 | 8 |
-| UX & Design | 5 | 5 |
-| Strategy & Governance | 5 | 5 |
-| Autonomous Control | 4 | 4 |
-| System Runtime | 6 | 6 |
-| Optional High-Value | 8 | 8 |
-| **Total** | **65** | **65** |
+Current deployed security state remains:
 
-Therefore **live/source identity parity is exact at 65/65**.
+- RLS enabled for `skills` and `categories`
+- public reads allowed
+- writes restricted to authenticated admins
 
-## Runtime-binding truth
+## R1-C native identity resolution
 
-The explicit adapter map still binds exactly `core-001` → `core-010`.
+The two former stable-ID collisions were resolved without changing deployed v7 identities:
+
+| Deployed identity preserved | Native package rekeyed |
+|---|---|
+| `ux-001` → `UI-Design` | `Screenshot to Blueprint`: `ux-001` → **`ux-007`** |
+| `ux-002` → `UX-Research` | `Frontend Fidelity Reconstruction`: `ux-002` → **`ux-008`** |
+
+`core-001 / LLM` remains the exact native stable-ID/name match.
+
+Result: **0 native ID collisions**. No native promotion occurred.
+
+## R1-D shadow mode
+
+Shadow mode is implemented in Skill Hub with these invariants:
 
 ```text
-DATABASE DEFINITION EXISTS
-        ≠
-RUNTIME ADAPTER EXISTS
-        ≠
-RUNTIME EXECUTION IS HEALTHY
+Supabase DB = PRIMARY / serving authority
+Git v7 export = SHADOW / observation only
 ```
 
-R1 preserves this distinction. The remaining 55 database definitions are not automatically reclassified as executable merely because they exist in the registry.
+The shadow comparator checks all 20 deployed definition fields:
 
-## Native reconciliation
+`id`, `name`, `category_id`, `description`, `trigger_condition`, `boundary`, `priority`, `cost_class`, `latency_class`, `requires_auth`, `requires_freshness`, `safe_for_parallel`, `stateful`, `logs_required`, `inputs`, `outputs`, `fallback_chain`, `invoke_conditions`, `block_conditions`, `tool_definition`.
 
-The current Git-backed native registry contains 17 canonical packages.
+Array order is significant; object key ordering is canonicalized. Shadow fetch/audit failures fail open to DB serving.
 
-Known relationships:
+The first full-definition verification pass produced:
 
-- `core-001` / `LLM` — exact stable-ID/name match.
-- `ux-001` — **ID collision**: v7 `UI-Design` vs native `Screenshot to Blueprint`.
-- `ux-002` — **ID collision**: v7 `UX-Research` vs native `Frontend Fidelity Reconstruction`.
-
-The two UX collisions are now the only R1 reconciliation blockers. Neither side may silently overwrite the other.
-
-Run:
-
-```bash
-npm run census:v7
+```text
+DB skills             65
+File skills           65
+Fields compared       20 / 20
+Missing in file        0
+Missing in DB          0
+Field mismatches       0
+Native ID collisions   0
 ```
 
-The census now evaluates the committed authoritative live export against the current 65-skill live contract while retaining the historical 88 claim as source evidence.
+The same verification workflow also passed the production build and lint on the R1-D changed surface. See `inventory/v7/shadow-evidence.json`.
 
-For another read-only export:
+## Compatibility boundary
 
-```bash
-npm run reconcile:v7 -- path/to/live-v7-export.json
-```
+R1-D does **not** change:
 
-Reconciliation reports exact native matches, native ID collisions, source-only/native-only definitions, live-only/source-missing rows, duplicate IDs, current live-contract mismatch, and shadow-mode blockers. It performs zero native promotions.
+- existing HMAC signing/timestamp freshness
+- `ping`, `list-skills`, or `invoke` contracts
+- current deployed skill IDs
+- adapter selection/execution
+- Sophie callback behavior
+- DB-backed returned skill data
 
-## Live RLS/security verification
+An additive HMAC-protected `registry-status` action exposes migration evidence without changing serving behavior.
 
-Current deployed database policy state was verified directly during R1-B:
+## Gates
 
-- RLS is enabled on `public.skills`.
-- RLS is enabled on `public.categories`.
-- Public `SELECT` is allowed for both tables.
-- `INSERT`, `UPDATE`, and `DELETE` require an authenticated user satisfying `has_role(auth.uid(), 'admin'::app_role)`.
+### R1-A — Source census ✅
+Historical source, categories, 65 migration-confirmed definitions, 10 runtime bindings, and stale 88 claim preserved as evidence.
 
-This confirms that the later source-level security remediation is active in the deployed database; the original broad public-write policies are not the current live policy state.
+### R1-B — Live DB census ✅
+Authoritative 65-row live census, category parity, duplicate checks, RLS verification, and corrected current product contract complete.
 
-## R1 gates
+### R1-C — Identity/parity reconciliation ✅
+Live/source identity parity exact; native `ux-001`/`ux-002` collisions resolved through `ux-007`/`ux-008` rekeys.
 
-### Gate R1-A — Source census ✅
+### R1-D — Shadow mode 🟢 active
+First 65 × 20 full-definition pass is exact with DB still primary. Continue accumulating repeated clean evidence.
 
-- source repository pinned
-- 10 categories enumerated
-- 65 migration-confirmed definitions enumerated
-- 10 explicit runtime bindings enumerated
-- historical 88-skill static contract preserved as evidence
-- zero promotions
+### R1-E — `db → hybrid` ⛔ not started
+No cutover until the confidence window contains repeated clean shadow evidence and explicit approval.
 
-### Gate R1-B — Live DB census ✅
-
-- authoritative `public.skills` export captured
-- authoritative category counts captured
-- 65 rows / 65 IDs / 65 names
-- duplicate ID/name check clear
-- live RLS/policy verification complete
-- former 23-record delta resolved as stale metadata, not database rows
-- current product contract corrected to 65
-
-### Gate R1-C — Identity/parity reconciliation ⏳ blocked only by native ID collisions
-
-- live ↔ source: exact 65/65 identity parity
-- `core-001`: exact native stable-ID/name match
-- `ux-001`: unresolved native ID collision
-- `ux-002`: unresolved native ID collision
-
-### Gate R1-D — Shadow mode ⛔ not started
-
-Blocked only until `ux-001` and `ux-002` collision policy is resolved and the resulting registry validates.
-
-### Gate R1-E — `db → hybrid` ⛔ not started
-
-No storage-authority change until shadow evidence passes.
+### R1-F — `hybrid → files` ⛔ future
+File definitions become serving authority only after hybrid evidence closes. Operational runtime state remains database-backed.
 
 ## Invariants
 
 1. Census is not promotion.
-2. Historical evidence is preserved rather than rewritten to look retrospectively correct.
-3. v7 IDs remain evidence even when they collide with native IDs.
-4. A database row is not assumed executable.
-5. The current native `skills/` tree remains canonical for existing native packages.
-6. Skill Hub runtime behavior is unchanged by census work.
-7. OpenClaw external inventory remains outside v7 parity authority.
-8. No `db → hybrid` cutover occurs while native ID collisions remain unresolved.
+2. Historical evidence is preserved rather than rewritten.
+3. Stable deployed IDs are not silently repurposed.
+4. A database definition is not automatically an executable runtime skill.
+5. Native packages remain isolated under `skills/`.
+6. OpenClaw inventory remains external to v7 migration authority.
+7. R1-D is observational; DB remains the serving authority.
+8. Sophie-X experiences no storage migration downtime.
