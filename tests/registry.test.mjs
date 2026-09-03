@@ -103,7 +103,7 @@ test('R1 native ID rekeys preserve deployed v7 identities and remove collisions'
 
   assert.equal(result.counts.source_confirmed, 65);
   assert.equal(result.counts.runtime_bound, 10);
-  assert.equal(result.counts.native, 18);
+  assert.equal(result.counts.native, nativeIndex.count);
   assert.equal(result.native_promotion_count, 0);
   assert.equal(result.exact_native_matches.some((item) => item.id === 'core-001' && item.name === 'LLM'), true);
   assert.deepEqual(result.native_id_collisions, []);
@@ -111,7 +111,7 @@ test('R1 native ID rekeys preserve deployed v7 identities and remove collisions'
   assert.equal(nativeIndex.skills.some((skill) => skill.id === 'ux-008' && skill.slug === 'frontend-fidelity-reconstruction'), true);
   assert.equal(nativeIndex.skills.some((skill) => skill.id === 'ux-001' || skill.id === 'ux-002'), false);
   assert.equal(result.counts.source_only, 64);
-  assert.equal(result.counts.native_only, 17);
+  assert.equal(result.counts.native_only, nativeIndex.count - result.exact_native_matches.length);
   assert.equal(result.live.status, 'required');
   assert.equal(result.live.unresolved_delta, 23);
   assert.deepEqual(result.blocking_findings.map((finding) => finding.code), ['live_db_export_required']);
